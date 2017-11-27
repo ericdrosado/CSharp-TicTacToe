@@ -1,0 +1,23 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToe", "TicTacToe\TicTacToe.csproj", "{2A97D5C0-2E1E-4A9F-8BF5-570479BFE1B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{F1DE9E7B-174E-4DAC-9B64-0DB106FAF5D8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2A97D5C0-2E1E-4A9F-8BF5-570479BFE1B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A97D5C0-2E1E-4A9F-8BF5-570479BFE1B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A97D5C0-2E1E-4A9F-8BF5-570479BFE1B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A97D5C0-2E1E-4A9F-8BF5-570479BFE1B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1DE9E7B-174E-4DAC-9B64-0DB106FAF5D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1DE9E7B-174E-4DAC-9B64-0DB106FAF5D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1DE9E7B-174E-4DAC-9B64-0DB106FAF5D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1DE9E7B-174E-4DAC-9B64-0DB106FAF5D8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
