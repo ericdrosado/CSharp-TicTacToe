@@ -12,4 +12,12 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="Tests.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../TicTacToe/TicTacToe.csproj" />
+  </ItemGroup>
+	
 </Project>
