@@ -4,15 +4,14 @@ namespace TicTacToe {
 
     public class Game {
 
-        private IO io; Prompts prompts;
+        private UI ui;
 
-        public Game(IO io, Prompts prompts) {
-            this.io = io;
-            this.prompts = prompts;
+        public Game(UI ui) {
+            this.ui = ui;
         }
 
         public void StartGame() {
-            this.io.Print(this.prompts.Greeting());
+            this.ui.NewGameView();
         }
 
     }

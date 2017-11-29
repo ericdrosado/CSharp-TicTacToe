@@ -6,8 +6,8 @@ namespace TicTacToe {
         
         static void Main(string[] args) {
             IO io = new IO();
-            Prompts prompts = new Prompts();
-            Game game = new Game(io, prompts);
+            UI ui = new UI(io);
+            Game game = new Game(ui);
             game.StartGame();
         }
     }
