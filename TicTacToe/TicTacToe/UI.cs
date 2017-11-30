@@ -4,17 +4,33 @@ namespace TicTacToe {
 
     public class UI {
 
+        private Board board;
         private IO io;
 
-        public UI(IO io) {
+        public UI(Board board, IO io) {
+            this.board = board; 
             this.io = io;
         }
 
-        public void NewGameView(string[] gameBoard) {
+        public void NewGameView() {
+            string[] gameBoard = this.board.GameBoard; 
             this.io.Print(Greeting());
             this.io.Print(Instructions());
             string board = GameBoard(gameBoard);
             this.io.Print(BoardHeader(TurnPrompt("X")));
+            this.io.Print(BoardBorder(board));
+        }
+
+        public void PlaceMarker() {
+            string input = this.io.GetInput();
+            int move = Int32.Parse(input);
+            this.board.UpdateBoard(move);
+            BoardView();
+        }
+
+        public void BoardView() {
+            string[] gameBoard = this.board.GameBoard;
+            string board = GameBoard(gameBoard);
             this.io.Print(BoardBorder(board));
         }
 
