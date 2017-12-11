@@ -6,34 +6,40 @@ namespace Tests.TicTacToe {
 
     public class UITest {
 
-        public UI _ui;
+        private UI ui;
 
         public UITest() {
             IO io = new IO();
-            _ui = new UI(io);
+            this.ui = new UI(io);
         }
 
         [Fact]
-        public void ReturnGreeting() {
-            var expectedGreeting = "+-------------------------------------------------------+\n" +
-                                   "|                  Welcome to TicTacToe                 |\n" +
-                                   "+-------------------------------------------------------+";
-            var greeting = _ui.Greeting();
+        public void ReturnBoardWithoutMarkers() {
+            string[] board = {"0", "1", "2", "3", "4", "5", "6", "7", "8" };
+            string expectedBoard = "                       " + "0" + " | " + "1" + " | " + "2" +
+                                   "\n                      " + "---+---+---\n" +
+                                   "                       " + "3" + " | " + "4" + " | " + "5" +
+                                   "\n                      " + "---+---+---\n" +
+                                   "                       " + "6" + " | " + "7" + " | " + "8" + "\n";
 
-            Assert.Equal(expectedGreeting, greeting);
+            string actualBoard = this.ui.GameBoard(board);
+
+            Assert.Equal(expectedBoard, actualBoard);
         }
 
         [Fact]
-        public void ReturnInstructions()
+        public void ReturnBoardWithMarkers()
         {
-            var expectedInstructions = "+-------------------------------------------------------+\n" +
-                                       "|The object of TicTacToe is to get three of your markers|\n" +
-                                       "|in a row before your opponent can. If all the spaces   |\n" +
-                                       "|are occupied with no winner, the game is a draw.       |\n" +
-                                       "+-------------------------------------------------------+\n";
-            var instructions = _ui.Instructions();
+            string[] board = { "0", "X", "2", "O", "X", "5", "6", "7", "8" };
+            string expectedBoard = "                       " + "0" + " | " + "X" + " | " + "2" +
+                                   "\n                      " + "---+---+---\n" +
+                                   "                       " + "O" + " | " + "X" + " | " + "5" +
+                                   "\n                      " + "---+---+---\n" +
+                                   "                       " + "6" + " | " + "7" + " | " + "8" + "\n";
 
-            Assert.Equal(expectedInstructions, instructions);
+            string actualBoard = this.ui.GameBoard(board);
+
+            Assert.Equal(expectedBoard, actualBoard);
         }
     }
 }
