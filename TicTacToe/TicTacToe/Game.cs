@@ -3,17 +3,16 @@
 namespace TicTacToe {
 
     public class Game {
-
-        private Board board;
+        
         private UI ui;
 
-        public Game(Board board, UI ui) {
-            this.board = board;
+        public Game(UI ui) {
             this.ui = ui;
         }
 
         public void StartGame() {
-            this.ui.NewGameView(this.board.GameBoard);
+            this.ui.NewGameView();
+            this.ui.PlaceMarker();
         }
 
     }

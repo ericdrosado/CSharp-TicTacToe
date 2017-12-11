@@ -9,8 +9,9 @@ namespace Tests.TicTacToe {
         private UI ui;
 
         public UITest() {
+            Board board = new Board();
             IO io = new IO();
-            this.ui = new UI(io);
+            this.ui = new UI(board, io);
         }
 
         [Fact]
