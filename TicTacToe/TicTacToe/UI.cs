@@ -22,10 +22,18 @@ namespace TicTacToe {
         }
 
         public void PlaceMarker() {
-            string input = this.io.GetInput();
-            int move = Int32.Parse(input);
-            this.board.UpdateBoard(move);
-            BoardView();
+            try {
+                string input = this.io.GetInput();
+                int move = Int32.Parse(input);
+                this.board.UpdateBoard(move);
+                BoardView();
+            } catch(FormatException) {
+                this.io.Print(InvalidEntryPrompt());
+                PlaceMarker();
+            } catch(IndexOutOfRangeException) {
+                this.io.Print(InvalidEntryPrompt());
+                PlaceMarker();
+            } 
         }
 
         public void BoardView() {
@@ -77,6 +85,14 @@ namespace TicTacToe {
 
         public string TurnPrompt(string marker) {
             return String.Format("  {0}'s turn", marker);
+        }
+
+        public string InvalidEntryPrompt() {
+            return 
+            "+-------------------------------------------------------+\n" +
+            "|The entry used is not a valid entry. Be sure to choose |\n" +
+            "|a value from 0 - 8.                                    |\n" +
+            "+-------------------------------------------------------+";
         }
     }
 }
