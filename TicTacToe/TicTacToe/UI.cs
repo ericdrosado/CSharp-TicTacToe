@@ -27,10 +27,7 @@ namespace TicTacToe {
                 int move = Int32.Parse(input);
                 this.board.UpdateBoard(move);
                 BoardView();
-            } catch(FormatException) {
-                this.io.Print(InvalidEntryPrompt());
-                PlaceMarker();
-            } catch(IndexOutOfRangeException) {
+            } catch(Exception ex) when (ex is FormatException || ex is IndexOutOfRangeException) {
                 this.io.Print(InvalidEntryPrompt());
                 PlaceMarker();
             } 
