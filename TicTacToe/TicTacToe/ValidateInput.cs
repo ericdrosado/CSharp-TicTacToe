@@ -10,8 +10,7 @@ namespace TicTacToe {
         }
 
         public bool IsInputNumericString(string input) {
-            int number;
-            return Int32.TryParse(input, out number);
+            return Int32.TryParse(input, out int number);
         }
     }
 }

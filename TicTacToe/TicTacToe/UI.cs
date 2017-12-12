@@ -22,11 +22,18 @@ namespace TicTacToe {
             return move;
         }
 
+        public void PrintTurnPrompt() {
+            this.io.Print(BoardHeader(TurnPrompt("X")));
+        }
+
+        public void PrintEndPrompt() {
+            this.io.Print(BoardHeader(EndPrompt()));
+        }
+
         public void NewGameView(string[] board) {
             this.io.Print(Greeting());
             this.io.Print(Instructions());
             string gameBoard = GameBoard(board);
-            this.io.Print(BoardHeader(TurnPrompt("X")));
             this.io.Print(BoardBorder(gameBoard));
         }
 
@@ -65,8 +72,8 @@ namespace TicTacToe {
 
         private string BoardHeader(string headerText) {
             return
-           "+-------------------------------------------------------+\n" +
-           headerText;
+            headerText + "\n" +
+            "+-------------------------------------------------------+\n";
         }
 
         private string BoardBorder(string board) {
@@ -84,8 +91,13 @@ namespace TicTacToe {
             return 
             "+-------------------------------------------------------+\n" +
             "|The entry used is not a valid entry. Be sure to choose |\n" +
-            "|a value from 0 - 8.                                    |\n" +
+            "|a value from 0 - 8 that has not been chosen.           |\n" +
             "+-------------------------------------------------------+";
         }
+
+        private string EndPrompt() {
+            return "Game Over";
+        }
+
     }
 }
