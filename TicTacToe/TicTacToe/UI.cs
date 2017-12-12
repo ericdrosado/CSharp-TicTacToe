@@ -3,20 +3,18 @@
 namespace TicTacToe {
 
     public class UI {
-
-        private Board board;
+        
         private IO io;
         private ValidateInput validateInput;
 
-        public UI(Board board, IO io, ValidateInput validateInput) {
-            this.board = board; 
+        public UI(IO io, ValidateInput validateInput) {
             this.io = io;
             this.validateInput = validateInput;
         }
 
-        public int GetMove() {
+        public int GetMove(string[] board) {
             string input = this.io.GetInput();
-            while (!this.validateInput.IsInputOnBoard(input, this.board.GameBoard) || !this.validateInput.IsInputNumericString(input)) {
+            while (!this.validateInput.IsInputOnBoard(input, board) || !this.validateInput.IsInputNumericString(input)) {
                 this.io.Print(InvalidEntryPrompt());
                 input = this.io.GetInput();
             }
@@ -24,23 +22,17 @@ namespace TicTacToe {
             return move;
         }
 
-        public void PlaceMarker(int move) {
-            this.board.UpdateBoard(move);
-        }
-
-        public void NewGameView() {
-            string[] gameBoard = this.board.GameBoard; 
+        public void NewGameView(string[] board) {
             this.io.Print(Greeting());
             this.io.Print(Instructions());
-            string board = GameBoard(gameBoard);
+            string gameBoard = GameBoard(board);
             this.io.Print(BoardHeader(TurnPrompt("X")));
-            this.io.Print(BoardBorder(board));
+            this.io.Print(BoardBorder(gameBoard));
         }
 
-        public void BoardView() {
-            string[] gameBoard = this.board.GameBoard;
-            string board = GameBoard(gameBoard);
-            this.io.Print(BoardBorder(board));
+        public void BoardView(string[] board) {
+            string gameBoard = GameBoard(board);
+            this.io.Print(BoardBorder(gameBoard));
         }
 
         public string GameBoard(string[] gameBoard) {
