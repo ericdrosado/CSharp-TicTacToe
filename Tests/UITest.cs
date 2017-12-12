@@ -12,7 +12,7 @@ namespace Tests.TicTacToe {
         public UITest() {
             this.board = new Board();
             IO io = new IO();
-            ValidateInput validateInput = new ValidateInput(board);
+            ValidateInput validateInput = new ValidateInput();
             this.ui = new UI(board, io, validateInput);
         }
 

@@ -6,11 +6,12 @@ namespace Tests.TicTacToe {
 
     public class ValidateInputTest {
 
+        private Board board;
         private ValidateInput validateInput;
 
         public ValidateInputTest() {
-            Board board = new Board();
-            this.validateInput = new ValidateInput(board);
+            this.board = new Board();
+            this.validateInput = new ValidateInput();
         }
 
         [Theory]
@@ -24,7 +25,7 @@ namespace Tests.TicTacToe {
         [InlineData("7")]
         [InlineData("8")]
         public void ReturnTrueIfInputIsOnBoard(string input) {
-            bool hasValue = this.validateInput.IsInputOnBoard(input);
+            bool hasValue = this.validateInput.IsInputOnBoard(input, this.board.GameBoard);
 
             Assert.Equal(true, hasValue);
         }
@@ -35,7 +36,7 @@ namespace Tests.TicTacToe {
         [InlineData("!")]
         [InlineData(" ")]
         public void ReturnFalseIfInputIsNotOnBoard(string input) {
-            bool hasValue = this.validateInput.IsInputOnBoard(input);
+            bool hasValue = this.validateInput.IsInputOnBoard(input, this.board.GameBoard);
 
             Assert.Equal(false, hasValue);
         }

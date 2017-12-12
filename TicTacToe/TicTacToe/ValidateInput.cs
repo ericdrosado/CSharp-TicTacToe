@@ -3,15 +3,9 @@
 namespace TicTacToe {
     
     public class ValidateInput {
-
-        private Board board;
-
-        public ValidateInput(Board board) {
-            this.board = board; 
-        }
         
-        public bool IsInputOnBoard(string input) {
-            bool hasValue = Array.Exists(this.board.GameBoard, entry => entry.Equals(input));
+        public bool IsInputOnBoard(string input, string[] gameBoard) {
+            bool hasValue = Array.Exists(gameBoard, entry => entry.Equals(input));
             return hasValue;
         }
 

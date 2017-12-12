@@ -16,7 +16,7 @@ namespace TicTacToe {
 
         public int GetMove() {
             string input = this.io.GetInput();
-            while (!this.validateInput.IsInputOnBoard(input) || !this.validateInput.IsInputNumericString(input)) {
+            while (!this.validateInput.IsInputOnBoard(input, this.board.GameBoard) || !this.validateInput.IsInputNumericString(input)) {
                 this.io.Print(InvalidEntryPrompt());
                 input = this.io.GetInput();
             }
