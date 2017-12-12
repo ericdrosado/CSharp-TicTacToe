@@ -6,10 +6,26 @@ namespace TicTacToe {
 
         private Board board;
         private IO io;
+        private ValidateInput validateInput;
 
-        public UI(Board board, IO io) {
+        public UI(Board board, IO io, ValidateInput validateInput) {
             this.board = board; 
             this.io = io;
+            this.validateInput = validateInput;
+        }
+
+        public int GetMove() {
+            string input = this.io.GetInput();
+            while (!this.validateInput.IsInputOnBoard(input) || !this.validateInput.IsInputNumericString(input)) {
+                this.io.Print(InvalidEntryPrompt());
+                input = this.io.GetInput();
+            }
+            int move = Int32.Parse(input);
+            return move;
+        }
+
+        public void PlaceMarker(int move) {
+            this.board.UpdateBoard(move);
         }
 
         public void NewGameView() {
@@ -21,41 +37,10 @@ namespace TicTacToe {
             this.io.Print(BoardBorder(board));
         }
 
-        public void PlaceMarker() {
-            try {
-                string input = this.io.GetInput();
-                int move = Int32.Parse(input);
-                this.board.UpdateBoard(move);
-                BoardView();
-            } catch(Exception ex) when (ex is FormatException || ex is IndexOutOfRangeException) {
-                this.io.Print(InvalidEntryPrompt());
-                PlaceMarker();
-            } 
-        }
-
         public void BoardView() {
             string[] gameBoard = this.board.GameBoard;
             string board = GameBoard(gameBoard);
             this.io.Print(BoardBorder(board));
-        }
-
-        public string Greeting() {
-            return
-            "+-------------------------------------------------------+\n" +
-            "|                  Welcome to TicTacToe                 |\n" +
-            "+-------------------------------------------------------+";
-        }
-
-        public string Instructions() {
-            return
-            "+-------------------------------------------------------+\n" +
-            "|Instuctions: The object of TicTacToe is to get three   |\n" +
-            "|of your markers in a row before your opponent can. If  |\n" +
-            "|all the spaces are occupied with no winner, the game   |\n" +
-            "|ends in a draw. You can choose a space by typing the   |\n" +
-            "|number that corresponds to an open space and then press|\n" +
-            "|enter.                                                 |\n" +
-            "+-------------------------------------------------------+";
         }
 
         public string GameBoard(string[] gameBoard) {
@@ -67,24 +52,43 @@ namespace TicTacToe {
             "                       " + gameBoard[6] + " | " + gameBoard[7] + " | " + gameBoard[8] + "\n";
         }
 
-        public string BoardHeader(string headerText) {
+        private string Greeting() {
+            return
+            "+-------------------------------------------------------+\n" +
+            "|                  Welcome to TicTacToe                 |\n" +
+            "+-------------------------------------------------------+";
+        }
+
+        private string Instructions() {
+            return
+            "+-------------------------------------------------------+\n" +
+            "|Instuctions: The object of TicTacToe is to get three   |\n" +
+            "|of your markers in a row before your opponent can. If  |\n" +
+            "|all the spaces are occupied with no winner, the game   |\n" +
+            "|ends in a draw. You can choose a space by typing the   |\n" +
+            "|number that corresponds to an open space and then press|\n" +
+            "|enter.                                                 |\n" +
+            "+-------------------------------------------------------+";
+        }
+
+        private string BoardHeader(string headerText) {
             return
            "+-------------------------------------------------------+\n" +
            headerText;
         }
 
-        public string BoardBorder(string board) {
+        private string BoardBorder(string board) {
             return
             "+-------------------------------------------------------+\n" +
             board +
             "+-------------------------------------------------------+\n";
         }
 
-        public string TurnPrompt(string marker) {
+        private string TurnPrompt(string marker) {
             return String.Format("  {0}'s turn", marker);
         }
 
-        public string InvalidEntryPrompt() {
+        private string InvalidEntryPrompt() {
             return 
             "+-------------------------------------------------------+\n" +
             "|The entry used is not a valid entry. Be sure to choose |\n" +

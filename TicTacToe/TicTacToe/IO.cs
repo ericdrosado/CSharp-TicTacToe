@@ -8,7 +8,7 @@ namespace TicTacToe {
 
         public string GetInput() {
             return Console.ReadLine();
-        } 
+        }
 
     }
 }
