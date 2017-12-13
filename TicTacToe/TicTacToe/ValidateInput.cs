@@ -3,21 +3,13 @@
 namespace TicTacToe {
     
     public class ValidateInput {
-
-        private Board board;
-
-        public ValidateInput(Board board) {
-            this.board = board; 
-        }
         
-        public bool IsInputOnBoard(string input) {
-            bool hasValue = Array.Exists(this.board.GameBoard, entry => entry.Equals(input));
-            return hasValue;
+        public bool IsInputOnBoard(string input, string[] gameBoard) {
+            return Array.Exists(gameBoard, entry => entry.Equals(input));
         }
 
         public bool IsInputNumericString(string input) {
-            int number;
-            return Int32.TryParse(input, out number);
+            return Int32.TryParse(input, out int number);
         }
     }
 }

@@ -6,11 +6,12 @@ namespace Tests.TicTacToe {
 
     public class ValidateInputTest {
 
+        private Board board;
         private ValidateInput validateInput;
 
         public ValidateInputTest() {
-            Board board = new Board();
-            this.validateInput = new ValidateInput(board);
+            this.board = new Board();
+            this.validateInput = new ValidateInput();
         }
 
         [Theory]
@@ -24,9 +25,9 @@ namespace Tests.TicTacToe {
         [InlineData("7")]
         [InlineData("8")]
         public void ReturnTrueIfInputIsOnBoard(string input) {
-            bool hasValue = this.validateInput.IsInputOnBoard(input);
+            bool hasValue = this.validateInput.IsInputOnBoard(input, this.board.GameBoard);
 
-            Assert.Equal(true, hasValue);
+            Assert.True(hasValue);
         }
 
         [Theory]
@@ -35,9 +36,9 @@ namespace Tests.TicTacToe {
         [InlineData("!")]
         [InlineData(" ")]
         public void ReturnFalseIfInputIsNotOnBoard(string input) {
-            bool hasValue = this.validateInput.IsInputOnBoard(input);
+            bool hasValue = this.validateInput.IsInputOnBoard(input, this.board.GameBoard);
 
-            Assert.Equal(false, hasValue);
+            Assert.False(hasValue);
         }
 
         [Theory]
@@ -48,18 +49,18 @@ namespace Tests.TicTacToe {
         public void ReturnTrueIfInputIsNumericString(string input) {
             bool hasNumeric = this.validateInput.IsInputNumericString(input);
 
-            Assert.Equal(true, hasNumeric);
+            Assert.True(hasNumeric);
         }
 
         [Theory]
         [InlineData(" ")]
-        [InlineData("!!")]
+        [InlineData("!")]
         [InlineData("Test")]
         [InlineData("T")]
         public void ReturnFalseIfInputIsNotNumericString(string input) {
             bool hasNumeric = this.validateInput.IsInputNumericString(input);
 
-            Assert.Equal(false, hasNumeric);
+            Assert.False(hasNumeric);
         }
 
     }

@@ -6,14 +6,12 @@ namespace Tests.TicTacToe {
 
     public class UITest {
 
-        private Board board;
         private UI ui;
 
         public UITest() {
-            this.board = new Board();
             IO io = new IO();
-            ValidateInput validateInput = new ValidateInput(board);
-            this.ui = new UI(board, io, validateInput);
+            ValidateInput validateInput = new ValidateInput();
+            this.ui = new UI(io, validateInput);
         }
 
         [Fact]
@@ -44,19 +42,5 @@ namespace Tests.TicTacToe {
             Assert.Equal(expectedBoard, actualBoard);
         }
 
-        [Theory]
-        [InlineData(0)]
-        [InlineData(1)]
-        [InlineData(2)]
-        [InlineData(3)]
-        public void ExpectMarkerToBePlaced(int move) {
-            string[] gameBoard = this.board.GameBoard;
-
-            this.ui.PlaceMarker(move);
-
-            gameBoard[move] = "X";
-
-            Assert.Equal(gameBoard, this.board.GameBoard);
-        }
     }
 }

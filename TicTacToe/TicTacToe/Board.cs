@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace TicTacToe {
     
@@ -11,8 +13,17 @@ namespace TicTacToe {
             get { return gameBoard; }
         }
 
+        public void CreateNewBoard() {
+            AvailableSpaces();
+        }
+
         public void UpdateBoard(int move) {
             gameBoard[move] = currentMarker;
+            AvailableSpaces();
+        }
+
+        public IEnumerable<string> AvailableSpaces() {
+            return gameBoard.Where(cell => Int32.TryParse(cell, out int number));
         }
 
     }
