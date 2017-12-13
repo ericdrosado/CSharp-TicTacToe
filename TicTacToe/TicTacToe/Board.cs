@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TicTacToe {
     
     public class Board {
 
-        private List<string> availableSpaces = new List<string>();
+        private IEnumerable<string> availableSpaces = new List<string>();
         private string[] gameBoard = {"0", "1", "2", "3", "4", "5", "6", "7", "8"};
         private string currentMarker = "X";
 
@@ -13,7 +14,7 @@ namespace TicTacToe {
             get { return gameBoard; }
         }
 
-        public List<string> GetAvailableSpaces {
+        public IEnumerable<string> GetAvailableSpaces {
             get { return availableSpaces; }
         }
 
@@ -27,12 +28,7 @@ namespace TicTacToe {
         }
 
         private void AvailableSpaces() {
-            availableSpaces.Clear();
-            foreach (string cell in gameBoard) {
-                if (Int32.TryParse(cell, out int number)) {
-                    availableSpaces.Add(cell);
-                }
-            }
+            availableSpaces = gameBoard.Where(cell => Int32.TryParse(cell, out int number));
         }
 
     }

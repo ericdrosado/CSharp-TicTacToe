@@ -27,7 +27,7 @@ namespace Tests.TicTacToe {
         public void ReturnTrueIfInputIsOnBoard(string input) {
             bool hasValue = this.validateInput.IsInputOnBoard(input, this.board.GameBoard);
 
-            Assert.Equal(true, hasValue);
+            Assert.True(hasValue);
         }
 
         [Theory]
@@ -38,7 +38,7 @@ namespace Tests.TicTacToe {
         public void ReturnFalseIfInputIsNotOnBoard(string input) {
             bool hasValue = this.validateInput.IsInputOnBoard(input, this.board.GameBoard);
 
-            Assert.Equal(false, hasValue);
+            Assert.False(hasValue);
         }
 
         [Theory]
@@ -49,18 +49,18 @@ namespace Tests.TicTacToe {
         public void ReturnTrueIfInputIsNumericString(string input) {
             bool hasNumeric = this.validateInput.IsInputNumericString(input);
 
-            Assert.Equal(true, hasNumeric);
+            Assert.True(hasNumeric);
         }
 
         [Theory]
         [InlineData(" ")]
-        [InlineData("!!")]
+        [InlineData("!")]
         [InlineData("Test")]
         [InlineData("T")]
         public void ReturnFalseIfInputIsNotNumericString(string input) {
             bool hasNumeric = this.validateInput.IsInputNumericString(input);
 
-            Assert.Equal(false, hasNumeric);
+            Assert.False(hasNumeric);
         }
 
     }

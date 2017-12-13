@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace TicTacToe {
 
@@ -15,7 +16,7 @@ namespace TicTacToe {
         public void StartGame() {
             this.board.CreateNewBoard();
             this.ui.NewGameView(this.board.GameBoard);
-            while (this.board.GetAvailableSpaces.Count > 0) {
+            while (this.board.GetAvailableSpaces.Count() > 0) {
                 this.ui.PrintTurnPrompt();
                 int move = this.ui.GetMove(this.board.GameBoard);
                 PlaceMarker(move);
