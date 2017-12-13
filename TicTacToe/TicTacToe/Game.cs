@@ -14,7 +14,6 @@ namespace TicTacToe {
         }
 
         public void StartGame() {
-            this.board.CreateNewBoard();
             this.ui.NewGameView(this.board.GameBoard);
             while (this.board.AvailableSpaces().Count() > 0) {
                 this.ui.PrintTurnPrompt();

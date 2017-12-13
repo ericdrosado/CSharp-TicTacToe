@@ -34,6 +34,5 @@ namespace Tests.TicTacToe {
             Assert.NotEqual(spacesAvailableBefore, spacesAvailableAfter);
         }
 
-
     }
 }

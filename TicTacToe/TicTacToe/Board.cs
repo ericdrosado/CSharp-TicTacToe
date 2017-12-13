@@ -13,10 +13,6 @@ namespace TicTacToe {
             get { return gameBoard; }
         }
 
-        public void CreateNewBoard() {
-            AvailableSpaces();
-        }
-
         public void UpdateBoard(int move) {
             gameBoard[move] = currentMarker;
             AvailableSpaces();
