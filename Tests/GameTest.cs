@@ -27,7 +27,7 @@ namespace Tests.TicTacToe {
             int spacesAvailableBefore = this.board.AvailableSpaces().Count();
 
             foreach (int move in moves) {
-                this.game.PlaceMarker(move);
+                this.board.UpdateBoard(move);
             }
             int spacesAvailableAfter = this.board.AvailableSpaces().Count();
 

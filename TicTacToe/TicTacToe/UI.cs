@@ -22,8 +22,8 @@ namespace TicTacToe {
             return move;
         }
 
-        public void PrintTurnPrompt() {
-            this.io.Print(BoardHeader(TurnPrompt("X")));
+        public void PrintTurnPrompt(string marker) {
+            this.io.Print(BoardHeader(TurnPrompt(marker)));
         }
 
         public void PrintEndPrompt() {

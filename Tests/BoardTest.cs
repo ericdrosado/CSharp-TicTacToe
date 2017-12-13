@@ -48,5 +48,15 @@ namespace Tests.TicTacToe {
             Assert.Equal(availableMoves, this.board.AvailableSpaces().Count());
         }
 
+        [Theory]
+        [InlineData(0)]
+        public void SwitchMarkerSymbol(int move) {
+            string markerBeforeMove = this.board.CurrentMarker;
+            this.board.UpdateBoard(move);
+            string markerAfterMove = this.board.CurrentMarker;
+
+            Assert.NotEqual(markerBeforeMove, markerAfterMove);
+        }
+
     }
 }
