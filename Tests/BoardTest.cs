@@ -52,7 +52,7 @@ namespace Tests.TicTacToe {
         [InlineData(0)]
         public void SwitchMarkerSymbol(int move) {
             string markerBeforeMove = this.board.CurrentMarker;
-            this.board.UpdateBoard(move);
+            this.board.SwitchMarker();
             string markerAfterMove = this.board.CurrentMarker;
 
             Assert.NotEqual(markerBeforeMove, markerAfterMove);

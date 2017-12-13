@@ -12,10 +12,11 @@ namespace Tests.TicTacToe {
 
         public GameTest() {
             this.board = new Board();
+            EndgameConditions endgameConditions = new EndgameConditions();
             IO io = new IO();
             ValidateInput validateInput = new ValidateInput();
             UI ui = new UI(io, validateInput);
-            this.game = new Game(this.board, ui);
+            this.game = new Game(this.board, endgameConditions, ui);
         }
 
         [Theory]

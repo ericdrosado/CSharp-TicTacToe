@@ -26,15 +26,17 @@ namespace TicTacToe {
             this.io.Print(BoardHeader(TurnPrompt(marker)));
         }
 
-        public void PrintEndPrompt() {
-            this.io.Print(BoardHeader(EndPrompt()));
+        public void PrintEndgamePrompt(bool isWin, string marker) {
+            if (isWin) {
+                this.io.Print(BoardHeader(WinPrompt(marker)));
+            } else {
+                this.io.Print(BoardHeader(TiePrompt()));
+            }
         }
 
         public void NewGameView(string[] board) {
             this.io.Print(Greeting());
             this.io.Print(Instructions());
-            string gameBoard = GameBoard(board);
-            this.io.Print(BoardBorder(gameBoard));
         }
 
         public void BoardView(string[] board) {
@@ -95,8 +97,12 @@ namespace TicTacToe {
             "+-------------------------------------------------------+";
         }
 
-        private string EndPrompt() {
-            return "Game Over";
+        private string WinPrompt(string marker) {
+            return String.Format("  {0} Wins!", marker);
+        }
+
+        private string TiePrompt() {
+            return "Tie Game!";
         }
 
     }
