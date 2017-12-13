@@ -12,7 +12,9 @@ namespace TicTacToe {
 
         public void StartGame() {
             this.ui.NewGameView();
-            this.ui.PlaceMarker();
+            int move = this.ui.GetMove();
+            this.ui.PlaceMarker(move);
+            this.ui.BoardView();
         }
 
     }

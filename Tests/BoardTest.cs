@@ -13,10 +13,16 @@ namespace Tests.TicTacToe {
         }
 
         [Theory]
-        [InlineData(0)]
-        [InlineData(4)]
+        [InlineData("0")]
+        [InlineData("1")]
+        [InlineData("2")]
+        [InlineData("3")]
+        [InlineData("4")]
+        [InlineData("5")]
+        [InlineData("6")]
+        [InlineData("7")]
+        [InlineData("8")]
         public void AddMarkerToGameBoard(int move) {
-           
             string[] updatedBoard = this.board.GameBoard;
             string[] gameBoard = { "0", "1", "2", "3", "4", "5", "6", "7", "8" };
 
