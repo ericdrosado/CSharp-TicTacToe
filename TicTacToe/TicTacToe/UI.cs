@@ -33,8 +33,6 @@ namespace TicTacToe {
         public void NewGameView(string[] board) {
             this.io.Print(Greeting());
             this.io.Print(Instructions());
-            string gameBoard = GameBoard(board);
-            this.io.Print(BoardBorder(gameBoard));
         }
 
         public void BoardView(string[] board) {
