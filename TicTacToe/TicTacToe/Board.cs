@@ -13,18 +13,22 @@ namespace TicTacToe {
             get { return gameBoard; }
         }
 
-        public void CreateNewBoard() {
-            AvailableSpaces();
+        public string CurrentMarker {
+            get { return currentMarker; }
         }
 
         public void UpdateBoard(int move) {
             gameBoard[move] = currentMarker;
             AvailableSpaces();
+            SwitchMarker();
         }
 
         public IEnumerable<string> AvailableSpaces() {
             return gameBoard.Where(cell => Int32.TryParse(cell, out int number));
         }
 
+        private void SwitchMarker() {
+            currentMarker = currentMarker == "X" ? "O" : "X";
+        }
     }
 }

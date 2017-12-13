@@ -14,19 +14,14 @@ namespace TicTacToe {
         }
 
         public void StartGame() {
-            this.board.CreateNewBoard();
             this.ui.NewGameView(this.board.GameBoard);
             while (this.board.AvailableSpaces().Count() > 0) {
-                this.ui.PrintTurnPrompt();
+                this.ui.PrintTurnPrompt(this.board.CurrentMarker);
                 int move = this.ui.GetMove(this.board.GameBoard);
-                PlaceMarker(move);
+                this.board.UpdateBoard(move);
                 this.ui.BoardView(this.board.GameBoard);
             }
             this.ui.PrintEndPrompt();
-        }
-
-        public void PlaceMarker(int move) {
-            this.board.UpdateBoard(move);
         }
 
     }
