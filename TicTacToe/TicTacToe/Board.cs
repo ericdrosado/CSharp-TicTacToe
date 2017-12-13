@@ -6,16 +6,11 @@ namespace TicTacToe {
     
     public class Board {
 
-        private IEnumerable<string> availableSpaces = new List<string>();
         private string[] gameBoard = {"0", "1", "2", "3", "4", "5", "6", "7", "8"};
         private string currentMarker = "X";
 
         public string[] GameBoard {
             get { return gameBoard; }
-        }
-
-        public IEnumerable<string> GetAvailableSpaces {
-            get { return availableSpaces; }
         }
 
         public void CreateNewBoard() {
@@ -27,8 +22,8 @@ namespace TicTacToe {
             AvailableSpaces();
         }
 
-        private void AvailableSpaces() {
-            availableSpaces = gameBoard.Where(cell => Int32.TryParse(cell, out int number));
+        public IEnumerable<string> AvailableSpaces() {
+            return gameBoard.Where(cell => Int32.TryParse(cell, out int number));
         }
 
     }
