@@ -19,10 +19,10 @@ namespace TicTacToe {
 
         public void UpdateBoard(int move) {
             gameBoard[move] = currentMarker;
-            AvailableSpaces();
+            GetAvailableSpaces();
         }
 
-        public IEnumerable<string> AvailableSpaces() {
+        public IEnumerable<string> GetAvailableSpaces() {
             return gameBoard.Where(cell => Int32.TryParse(cell, out int number));
         }
 

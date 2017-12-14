@@ -25,12 +25,12 @@ namespace Tests.TicTacToe {
         [InlineData(new int[] { 0, 2, 3, 5, 6, 8 })]
         [InlineData(new int[] { 6, 7, 8 })]
         public void ExpectMarkerToBePlaced(int[] moves) {
-            int spacesAvailableBefore = this.board.AvailableSpaces().Count();
+            int spacesAvailableBefore = this.board.GetAvailableSpaces().Count();
 
             foreach (int move in moves) {
                 this.board.UpdateBoard(move);
             }
-            int spacesAvailableAfter = this.board.AvailableSpaces().Count();
+            int spacesAvailableAfter = this.board.GetAvailableSpaces().Count();
 
             Assert.NotEqual(spacesAvailableBefore, spacesAvailableAfter);
         }
