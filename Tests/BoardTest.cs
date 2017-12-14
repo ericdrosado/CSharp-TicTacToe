@@ -45,7 +45,7 @@ namespace Tests.TicTacToe {
                 this.board.UpdateBoard(move);
             }
 
-            Assert.Equal(availableMoves, this.board.AvailableSpaces().Count());
+            Assert.Equal(availableMoves, this.board.GetAvailableSpaces().Count());
         }
 
         [Theory]
