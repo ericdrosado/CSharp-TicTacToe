@@ -23,14 +23,12 @@ namespace TicTacToe {
             while (this.board.GetAvailableSpaces().Count() > 0) {
                 this.ui.BoardView(this.board.GameBoard);
                 this.ui.PrintTurnPrompt(this.board.CurrentMarker);
-                int move = this.ui.GetMove(this.board.GameBoard);
+                int move = this.board.CurrentMarker == "O"? this.computerLogic.GetMove(this.board.GameBoard) : this.ui.GetMove(this.board.GameBoard);
                 this.board.UpdateBoard(move);
-                if (this.endgameConditions.IsWin(this.board.GameBoard) || this.board.GetAvailableSpaces().Count() == 0 ) { break; }
-                this.board.SwitchMarker();
-                int computerMove = this.computerLogic.GetMove(this.board.GameBoard);
-                this.board.UpdateBoard(computerMove);
-                if (this.endgameConditions.IsWin(this.board.GameBoard)) { break; }
-                this.board.SwitchMarker();
+                if (this.endgameConditions.IsWin(this.board.GameBoard) || this.board.GetAvailableSpaces().Count() == 0) { 
+                    this.board.SwitchMarker();
+                    break; 
+                }
                 Console.Clear();
             }
             this.ui.BoardView(this.board.GameBoard);

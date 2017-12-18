@@ -19,7 +19,7 @@ namespace TicTacToe {
 
         public void UpdateBoard(int move) {
             gameBoard[move] = currentMarker;
-            GetAvailableSpaces();
+            SwitchMarker();
         }
 
         public IEnumerable<string> GetAvailableSpaces() {
