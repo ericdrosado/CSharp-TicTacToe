@@ -15,7 +15,7 @@ namespace TicTacToe {
         }
 
         private bool HorizontalWinMiddle(string[] gameBoard) {
-            return gameBoard[3] == gameBoard[4] && gameBoard[4]  == gameBoard[5];
+            return gameBoard[3] == gameBoard[4] && gameBoard[4] == gameBoard[5];
         }
 
         private bool HorizontalWinBottom(string[] gameBoard) {

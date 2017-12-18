@@ -7,11 +7,13 @@ namespace TicTacToe {
     public class Game {
 
         private Board board;
+        private ComputerLogic computerLogic;
         private EndgameConditions endgameConditions;
         private UI ui;
 
-        public Game(Board board, EndgameConditions endgameConditions, UI ui) {
+        public Game(Board board, ComputerLogic computerLogic, EndgameConditions endgameConditions, UI ui) {
             this.board = board;
+            this.computerLogic = computerLogic;
             this.endgameConditions = endgameConditions;
             this.ui = ui;
         }
@@ -25,7 +27,7 @@ namespace TicTacToe {
                 this.board.UpdateBoard(move);
                 if (this.endgameConditions.IsWin(this.board.GameBoard) || this.board.GetAvailableSpaces().Count() == 0 ) { break; }
                 this.board.SwitchMarker();
-                int computerMove = GetComputerMove(this.board.GetAvailableSpaces());
+                int computerMove = this.computerLogic.GetMove(this.board.GameBoard);
                 this.board.UpdateBoard(computerMove);
                 if (this.endgameConditions.IsWin(this.board.GameBoard)) { break; }
                 this.board.SwitchMarker();
@@ -33,10 +35,6 @@ namespace TicTacToe {
             }
             this.ui.BoardView(this.board.GameBoard);
             this.ui.PrintEndgamePrompt(this.endgameConditions.IsWin(this.board.GameBoard), this.board.CurrentMarker);
-        }
-
-        public int GetComputerMove(IEnumerable<string> availableSpaces) {
-            return Int32.Parse(availableSpaces.ElementAt(0));
         }
 
     }
