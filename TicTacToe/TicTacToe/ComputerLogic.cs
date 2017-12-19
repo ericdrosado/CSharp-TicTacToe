@@ -6,10 +6,10 @@ namespace TicTacToe {
 
     public class ComputerLogic {
 
-        private EndgameConditions endgameConditions;
+        private WinConditions winConditions;
 
-        public ComputerLogic(EndgameConditions endgameConditions) {
-            this.endgameConditions = endgameConditions;
+        public ComputerLogic(WinConditions winConditions) {
+            this.winConditions = winConditions;
         }
 
         public int GetMove(string[] gameBoard) {
@@ -27,9 +27,9 @@ namespace TicTacToe {
 
         private int GetScore(string[] gameBoard, string marker) {
             marker = marker == "O" ? "X" : "O";
-            if (marker == "O" && this.endgameConditions.IsWin(gameBoard)) {
+            if (marker == "O" && this.winConditions.IsWin(gameBoard)) {
                 return 1000;
-            } else if (marker == "X" && this.endgameConditions.IsWin(gameBoard)) {
+            } else if (marker == "X" && this.winConditions.IsWin(gameBoard)) {
                 return -1000;
             } else {
                 return 0;
@@ -39,7 +39,7 @@ namespace TicTacToe {
         private Moves MiniMax(string[] gameBoard, string marker) {
             List<int> availableSpaces = GetAvailableSpaces(gameBoard);
 
-            if (this.endgameConditions.IsWin(gameBoard) || availableSpaces.Count == 0) {
+            if (this.winConditions.IsWin(gameBoard) || availableSpaces.Count == 0) {
                 Moves move = new Moves();
                 move.score = GetScore(gameBoard, marker);
                 return move;

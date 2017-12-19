@@ -29,5 +29,6 @@ namespace TicTacToe {
         public void SwitchMarker() {
             currentMarker = currentMarker == "X" ? "O" : "X";
         }
+
     }
 }
