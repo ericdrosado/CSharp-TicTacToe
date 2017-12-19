@@ -6,67 +6,69 @@ namespace TicTacToe {
 
     public class WinConditions {
 
-        public bool IsWin(string[] gameBoard) {
-            return IsHorizontalWin(gameBoard) || IsVerticalWin(gameBoard) || 
-                IsForwardDiagonalWin(gameBoard) || IsBackwardDiagonalWin(gameBoard);
+        public bool IsWinner(string[] gameBoard) {
+            int boardDimension = (int) Math.Sqrt(gameBoard.Length);
+            return IsWin(GetRows(boardDimension, gameBoard)) || IsWin(GetColumns(boardDimension, gameBoard)) ||
+                IsWin(GetDiagonals(boardDimension, gameBoard));
         }
 
-        private bool IsHorizontalWin(string[] gameBoard) {
-            int rowLength = (int)Math.Sqrt(gameBoard.Length);
-            List<string> row = new List<string>();
-            for (int i = 0; i <= (gameBoard.Length - rowLength); i += rowLength) {
-                row.Add(gameBoard[i]);
-                for (int j = (i + 1); j <= (i + (rowLength - 1)); j++) {
-                    row.Add(gameBoard[j]);
-                }
+        private bool IsWin(List<List<string>> rows) {
+            foreach (var row in rows) {
                 if (row.All(cell => cell == row.First())) {
                     return true;
-                } else {
-                    row.Clear();
                 }
             }
             return false;
         }
 
-        private bool IsVerticalWin(string[] gameBoard) {
-            int columnLength = (int) Math.Sqrt(gameBoard.Length);
-            List<string> column = new List<string>();
-            for (int i = 0; i < columnLength; i++) {
+        private List<List<string>> GetRows(int boardDimension, string[] gameBoard) {
+            List<List<string>> rows = new List<List<string>>();
+            for (int i = 0; i <= (gameBoard.Length - boardDimension); i += boardDimension) {
+                List<string> row = new List<string>();
+                row.Add(gameBoard[i]);
+                for (int j = (i + 1); j <= (i + (boardDimension - 1)); j++) {
+                    row.Add(gameBoard[j]);
+                }
+                rows.Add(row);
+            }
+            return rows;
+
+        }
+
+        private List<List<string>> GetColumns(int boardDimension, string[] gameBoard) {
+            List<List<string>> columns = new List<List<string>>();
+            for (int i = 0; i < boardDimension; i++) {
+                List<string> column = new List<string>();
                 column.Add(gameBoard[i]);
-                for (int j = (i + columnLength); j <= (i + (columnLength * 2)); j += columnLength) {
+                for (int j = (i + boardDimension); j <= (i + (boardDimension * 2)); j += boardDimension) {
                     column.Add(gameBoard[j]);
                 }
-                if (column.All(cell => cell == column.First())) {
-                    return true;
-                } else {
-                    column.Clear();
-                }
+                columns.Add(column);
             }
-            return false;
+            return columns;
         }
 
-        private bool IsForwardDiagonalWin(string[] gameBoard) {
-            int diagonalLength = (int)Math.Sqrt(gameBoard.Length);
-            List<string> diagonal = new List<string>();
-            for (int i = diagonalLength - 1; i <= (diagonalLength - 1) * diagonalLength; i += (diagonalLength - 1) ) {
-                diagonal.Add(gameBoard[i]);
-            }
-            if (diagonal.All(cell => cell == diagonal.First())) {
-                return true;
-            }
-            return false;
+        private List<List<string>> GetDiagonals(int boardDimension, string[] gameBoard) {
+            List<List<string>> diagonals = new List<List<string>>();
+            diagonals.Add(GetForwardDiagonal(boardDimension, gameBoard));
+            diagonals.Add(GetBackwardDiagonal(boardDimension, gameBoard));
+            return diagonals;
         }
 
-        private bool IsBackwardDiagonalWin(string[] gameBoard) {
-            int diagonalLength = (int)Math.Sqrt(gameBoard.Length);
+        private List<string> GetForwardDiagonal(int boardDimension, string[] gameBoard) {
             List<string> diagonal = new List<string>();
-            for (int i = (gameBoard.Length - 1); i >= 0; i -= (diagonalLength + 1)) {
+            for (int i = boardDimension - 1; i <= (boardDimension - 1) * boardDimension; i += (boardDimension - 1) ) {
                 diagonal.Add(gameBoard[i]);
             }
-            if (diagonal.All(cell => cell == diagonal.First())) {
-                return true;
+            return diagonal;
+        }
+
+        private List<string> GetBackwardDiagonal(int boardDimension, string[] gameBoard) {
+            List<string> diagonal = new List<string>();
+            for (int i = (gameBoard.Length - 1); i >= 0; i -= (boardDimension + 1)) {
+                diagonal.Add(gameBoard[i]);
             }
-            return false;
+            return diagonal;
         }
 
     }

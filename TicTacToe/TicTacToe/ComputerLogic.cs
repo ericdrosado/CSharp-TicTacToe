@@ -27,9 +27,9 @@ namespace TicTacToe {
 
         private int GetScore(string[] gameBoard, string marker) {
             marker = marker == "O" ? "X" : "O";
-            if (marker == "O" && this.winConditions.IsWin(gameBoard)) {
+            if (marker == "O" && this.winConditions.IsWinner(gameBoard)) {
                 return 1000;
-            } else if (marker == "X" && this.winConditions.IsWin(gameBoard)) {
+            } else if (marker == "X" && this.winConditions.IsWinner(gameBoard)) {
                 return -1000;
             } else {
                 return 0;
@@ -39,7 +39,7 @@ namespace TicTacToe {
         private Moves MiniMax(string[] gameBoard, string marker) {
             List<int> availableSpaces = GetAvailableSpaces(gameBoard);
 
-            if (this.winConditions.IsWin(gameBoard) || availableSpaces.Count == 0) {
+            if (this.winConditions.IsWinner(gameBoard) || availableSpaces.Count == 0) {
                 Moves move = new Moves();
                 move.score = GetScore(gameBoard, marker);
                 return move;
