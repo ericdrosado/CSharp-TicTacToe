@@ -8,13 +8,14 @@ namespace TicTacToe {
 
         public bool IsWinner(string[] gameBoard) {
             int boardDimension = (int) Math.Sqrt(gameBoard.Length);
-            return IsWin(GetRows(boardDimension, gameBoard)) || IsWin(GetColumns(boardDimension, gameBoard)) ||
+            return IsWin(GetRows(boardDimension, gameBoard)) || 
+                IsWin(GetColumns(boardDimension, gameBoard)) ||
                 IsWin(GetDiagonals(boardDimension, gameBoard));
         }
 
-        private bool IsWin(List<List<string>> rows) {
-            foreach (var row in rows) {
-                if (row.All(cell => cell == row.First())) {
+        private bool IsWin(List<List<string>> collections) {
+            foreach (var collection in collections) {
+                if (collection.All(cell => cell == collection.First())) {
                     return true;
                 }
             }
