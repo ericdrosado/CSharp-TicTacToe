@@ -92,8 +92,9 @@ namespace Tests.TicTacToe {
         public void ExpectAIToWin(string[] gameBoard) {
 
             int move = this.computerLogic.GetMove(gameBoard);
+            int winMove = 2;
 
-            Assert.Equal(2, move);
+            Assert.Equal(winMove, move);
         }
 
     }

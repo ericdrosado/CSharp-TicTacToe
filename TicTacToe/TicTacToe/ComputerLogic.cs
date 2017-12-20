@@ -13,7 +13,7 @@ namespace TicTacToe {
         }
 
         public int GetMove(string[] gameBoard) {
-            return MiniMax(gameBoard, "O").spot;
+            return GetBestMove(gameBoard, "O").Spot;
         }
 
         private List<int> GetAvailableSpaces(string[] gameBoard) {
@@ -25,23 +25,28 @@ namespace TicTacToe {
             return availableSpaces;
         }
 
-        private int GetScore(string[] gameBoard, string marker) {
-            marker = marker == "O" ? "X" : "O";
-            if (marker == "O" && this.winConditions.IsWinner(gameBoard)) {
-                return 1000;
-            } else if (marker == "X" && this.winConditions.IsWinner(gameBoard)) {
-                return -1000;
-            } else {
-                return 0;
-            }
+        private string AlternateMarker(string marker) {
+            return marker == "O" ? "X" : "O";
         }
 
-        private Moves MiniMax(string[] gameBoard, string marker) {
+        private Moves GetScore(string[] gameBoard, string marker, Moves move) {
+            marker = AlternateMarker(marker);
+            if (marker == "O" && this.winConditions.IsWinner(gameBoard)) {
+                move.Score = 1000;
+            } else if (marker == "X" && this.winConditions.IsWinner(gameBoard)) {
+                move.Score = -1000;
+            } else {
+                move.Score = 0;
+            }
+            return move;
+        }
+
+        private Moves GetBestMove(string[] gameBoard, string marker) {
             List<int> availableSpaces = GetAvailableSpaces(gameBoard);
 
             if (this.winConditions.IsWinner(gameBoard) || availableSpaces.Count == 0) {
                 Moves move = new Moves();
-                move.score = GetScore(gameBoard, marker);
+                move = GetScore(gameBoard, marker, move);
                 return move;
             }
 
@@ -49,28 +54,28 @@ namespace TicTacToe {
 
             for (int i = 0; i < availableSpaces.Count; i++) {
                 Moves moveValues = new Moves();
-                moveValues.spot = availableSpaces.ElementAt(i);
+                moveValues.Spot = availableSpaces.ElementAt(i);
                 string[] gameBoardCopy = (string[]) gameBoard.Clone();
                 gameBoardCopy[availableSpaces.ElementAt(i)] = marker;
-                int score = MiniMax(gameBoardCopy, marker == "O" ? "X" : "O").score;
-                moveValues.score = score;
+                int score = GetBestMove(gameBoardCopy, AlternateMarker(marker)).Score;
+                moveValues.Score = score;
                 moves.Add(moveValues);
             }
 
             int bestMove = 0;
             if (marker == "O") {
-                int max = -1000;
+                int bestMoveScore = -1000;
                 for (int i = 0; i < moves.Count; i++) {
-                    if (moves[i].score > max) {
-                        max = moves[i].score;
+                    if (moves[i].Score > bestMoveScore) {
+                        bestMoveScore = moves[i].Score;
                         bestMove = i;
                     }
                 }
             } else {
-                int min = 1000;
+                int bestMoveScore = 1000;
                 for (int i = 0; i < moves.Count; i++) {
-                    if (moves[i].score < min) {
-                        min = moves[i].score;
+                    if (moves[i].Score < bestMoveScore) {
+                        bestMoveScore = moves[i].Score;
                         bestMove = i;
                     }
                 }
@@ -82,7 +87,7 @@ namespace TicTacToe {
     }
 
     public class Moves {
-        public int spot;
-        public int score;
+        public int Spot;
+        public int Score;
     }
 }
