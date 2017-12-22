@@ -15,11 +15,17 @@ namespace TicTacToe {
         public int GetMove(string[] board) {
             string input = this.io.GetInput();
             while (!this.validateInput.IsInputOnBoard(input, board) || !this.validateInput.IsInputNumericString(input)) {
-                this.io.Print(InvalidEntryPrompt());
+                IncorrectInputView(board);
                 input = this.io.GetInput();
             }
             int move = Int32.Parse(input);
             return move;
+        }
+
+        private void IncorrectInputView(string[] board) {
+            Console.Clear();
+            BoardView(board);
+            this.io.Print(InvalidEntryPrompt());
         }
 
         public void PrintTurnPrompt(string marker) {
