@@ -15,7 +15,6 @@ namespace Tests.TicTacToe {
         }
 
         [Theory]
-        [InlineData("0")]
         [InlineData("1")]
         [InlineData("2")]
         [InlineData("3")]
@@ -24,6 +23,7 @@ namespace Tests.TicTacToe {
         [InlineData("6")]
         [InlineData("7")]
         [InlineData("8")]
+        [InlineData("9")]
         public void ReturnTrueIfInputIsOnBoard(string input) {
             bool hasValue = this.validateInput.IsInputOnBoard(input, this.board.GameBoard);
 
@@ -31,7 +31,7 @@ namespace Tests.TicTacToe {
         }
 
         [Theory]
-        [InlineData("9")]
+        [InlineData("10")]
         [InlineData("1000")]
         [InlineData("!")]
         [InlineData(" ")]

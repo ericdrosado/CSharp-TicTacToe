@@ -21,9 +21,9 @@ namespace Tests.TicTacToe {
         }
 
         [Theory]
-        [InlineData(new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8 })]
-        [InlineData(new int[] { 0, 1, 2, 3 })]
-        [InlineData(new int[] { 0, 2, 3, 5, 6, 8 })]
+        [InlineData(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 })]
+        [InlineData(new int[] { 1, 2, 3, 4 })]
+        [InlineData(new int[] { 1, 2, 3, 5, 6, 8 })]
         [InlineData(new int[] { 6, 7, 8 })]
         public void ExpectMarkerToBePlaced(int[] moves) {
             int spacesAvailableBefore = this.board.GetAvailableSpaces().Count();

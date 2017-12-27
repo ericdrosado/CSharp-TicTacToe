@@ -56,7 +56,8 @@ namespace TicTacToe {
                 Moves moveValues = new Moves();
                 moveValues.Spot = availableSpaces.ElementAt(i);
                 string[] gameBoardCopy = (string[]) gameBoard.Clone();
-                gameBoardCopy[availableSpaces.ElementAt(i)] = marker;
+                int index = Array.IndexOf(gameBoardCopy, moveValues.Spot.ToString());
+                gameBoardCopy[index] = marker;
                 int score = GetBestMove(gameBoardCopy, AlternateMarker(marker)).Score;
                 moveValues.Score = score;
                 moves.Add(moveValues);
