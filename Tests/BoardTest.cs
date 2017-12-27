@@ -41,7 +41,6 @@ namespace Tests.TicTacToe {
             int availableMoves = this.board.GameBoard.Length - moves.Length;
 
             foreach (int move in moves ) {
-                this.board.GameBoard[move - 1] = "X";
                 this.board.UpdateBoard(move);
             }
 
