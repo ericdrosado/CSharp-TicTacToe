@@ -12,20 +12,35 @@ namespace TicTacToe {
             this.validateInput = validateInput;
         }
 
-        public int GetMove(string[] board) {
+        public int GetMove(string[] board, int boardSize) {
             string input = this.io.GetInput();
             while (!this.validateInput.IsInputOnBoard(input, board) || !this.validateInput.IsInputNumericString(input)) {
-                IncorrectInputView(board);
+                IncorrectInputView(board, boardSize);
                 input = this.io.GetInput();
             }
             int move = Int32.Parse(input);
             return move;
         }
 
-        private void IncorrectInputView(string[] board) {
+        public int GetBoardSize() {
+            string input = this.io.GetInput();
+            while (!this.validateInput.IsInputNumericString(input) || !this.validateInput.IsCorrectBoardSize(input)) {
+                IncorrectBoardSizeView();
+                input = this.io.GetInput();
+            }
+            int boardSize = Int32.Parse(input);
+            return boardSize;
+        }
+
+        private void IncorrectInputView(string[] board, int boardSize) {
             Console.Clear();
-            BoardView(board);
+            BoardView(board, boardSize);
             this.io.Print(InvalidEntryPrompt());
+        }
+
+        private void IncorrectBoardSizeView() {
+            Console.Clear();
+            this.io.Print(IncorrectBoardSizePrompt());
         }
 
         public void PrintTurnPrompt(string marker) {
@@ -43,20 +58,35 @@ namespace TicTacToe {
         public void NewGameView(string[] board) {
             this.io.Print(Greeting());
             this.io.Print(Instructions());
+            this.io.Print(ChooseBoardSizePrompt());
         }
 
-        public void BoardView(string[] board) {
-            string gameBoard = GameBoard(board);
+        public void BoardView(string[] board, int boardSize) {
+            string gameBoard = BuildBoard(board, boardSize);
             this.io.Print(BoardBorder(gameBoard));
         }
 
-        public string GameBoard(string[] gameBoard) {
-            return
-            "                       " + gameBoard[0] + " | " + gameBoard[1] + " | " + gameBoard[2] +
-            "\n                      " + "---+---+---\n" +
-            "                       " + gameBoard[3] + " | " + gameBoard[4] + " | " + gameBoard[5] +
-            "\n                      " + "---+---+---\n" +
-            "                       " + gameBoard[6] + " | " + gameBoard[7] + " | " + gameBoard[8] + "\n";
+        public string BuildBoard(string[] gameBoard, int boardSize) {
+            string board = "";
+            for (int index = 0; index <= boardSize * boardSize - boardSize; index += boardSize) {
+                string row = BuildRow(gameBoard, boardSize, index);
+                board = string.Concat(board, row);
+                if (index < boardSize * boardSize - boardSize) {
+                    board = boardSize == 4? string.Concat(board, "\n                      " + "---+---+---+---\n"): 
+                        string.Concat(board, "\n                      " + "---+---+---\n");
+                }
+            }
+            return board;
+        }
+
+        private string BuildRow(string[] gameBoard, int boardSize, int index) {
+            string row = index > 9? "                      " + gameBoard[index]:
+                "                       " + gameBoard[index];
+            for (int i = index + 1; i < index + boardSize; i++) {
+                row = i > 9? string.Concat(row, " |" + gameBoard[i]):
+                    string.Concat(row, " | " + gameBoard[i]);
+            }
+            return row;
         }
 
         private string Greeting() {
@@ -78,6 +108,14 @@ namespace TicTacToe {
             "+-------------------------------------------------------+";
         }
 
+        private string ChooseBoardSizePrompt() {
+            return
+            "+-------------------------------------------------------+\n" +
+            "|Please choose the size of the board you would like to  |\n" +
+            "|play on. Enter '3' for 3X3 or '4' for 4X4 board.       |\n" +
+            "+-------------------------------------------------------+";
+        }
+
         private string BoardHeader(string headerText) {
             return
             headerText + "\n" +
@@ -87,7 +125,7 @@ namespace TicTacToe {
         private string BoardBorder(string board) {
             return
             "+-------------------------------------------------------+\n" +
-            board +
+            board + "\n" +
             "+-------------------------------------------------------+\n";
         }
 
@@ -99,7 +137,15 @@ namespace TicTacToe {
             return 
             "+-------------------------------------------------------+\n" +
             "|The entry used is not a valid entry. Be sure to choose |\n" +
-            "|a value from 0 - 8 that has not been chosen.           |\n" +
+            "|a value on the board that has not been chosen.         |\n" +
+            "+-------------------------------------------------------+";
+        }
+
+        private string IncorrectBoardSizePrompt() {
+            return 
+            "+-------------------------------------------------------+\n" +
+            "|The entry used is not a valid entry. Be sure to input  |\n" +
+            "|an entry of '3' for 3X3 or '4' for 4X4.                |\n" +
             "+-------------------------------------------------------+";
         }
 

@@ -17,6 +17,22 @@ namespace TicTacToe {
             get { return currentMarker; }
         }
 
+        public void CreateBoard(int boardDimension) {
+            BuildBoard(boardDimension);
+            AssignSpaces();
+        }
+
+        private void BuildBoard(int boardDimension) {
+            int totalSpaces = (int) Math.Pow(boardDimension, 2);
+            gameBoard = new string[totalSpaces];
+        }
+
+        private void AssignSpaces() {
+            for (int i = 0; i < gameBoard.Length; i++) {
+                gameBoard[i] = (i).ToString();
+            }
+        }
+        
         public void UpdateBoard(int move) {
             gameBoard[move] = currentMarker;
             SwitchMarker();

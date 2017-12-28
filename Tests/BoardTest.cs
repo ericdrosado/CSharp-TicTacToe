@@ -14,6 +14,26 @@ namespace Tests.TicTacToe {
         }
 
         [Theory]
+        [InlineData((3))]
+        public void BuildA3x3GameBoardBasedOnDimension(int boardDimension) {
+            string[] gameBoard = { "0", "1", "2", "3", "4", "5", "6", "7", "8" };
+            
+            this.board.CreateBoard(boardDimension);
+            
+            Assert.Equal(this.board.GameBoard, gameBoard );
+        }
+        
+        [Theory]
+        [InlineData((4))]
+        public void BuildA4x4GameBoardBasedOnDimension(int boardDimension) {
+            string[] gameBoard = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" };
+            
+            this.board.CreateBoard(boardDimension);
+            
+            Assert.Equal(this.board.GameBoard, gameBoard );
+        }
+
+        [Theory]
         [InlineData(0)]
         [InlineData(1)]
         [InlineData(2)]

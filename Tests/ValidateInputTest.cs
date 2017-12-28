@@ -62,6 +62,24 @@ namespace Tests.TicTacToe {
 
             Assert.False(hasNumeric);
         }
+        
+        [Theory]
+        [InlineData("3")]
+        [InlineData("4")]
+        public void ReturnTrueIfBoardSizeIsCorrect(string input) {
+            bool hasCorrectBoardSize = this.validateInput.IsCorrectBoardSize(input);
 
+            Assert.True(hasCorrectBoardSize);
+        }
+        
+        [Theory]
+        [InlineData("2")]
+        [InlineData("5")]
+        [InlineData("10")]
+        public void ReturnFalseIfBoardSizeIsIncorrect(string input) {
+            bool hasCorrectBoardSize = this.validateInput.IsCorrectBoardSize(input);
+
+            Assert.False(hasCorrectBoardSize);
+        }
     }
 }
