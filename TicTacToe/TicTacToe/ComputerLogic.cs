@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace TicTacToe {
@@ -13,7 +14,28 @@ namespace TicTacToe {
         }
 
         public int GetMove(string[] gameBoard) {
-            return GetBestMove(gameBoard, "O").Spot;
+            List<Moves> moves = new List<Moves>();
+            List<int> availableSpaces = GetAvailableSpaces(gameBoard);
+            
+            for (int i = 0; i < availableSpaces.Count; i++) {
+                Moves moveValues = new Moves();
+                moveValues.Spot = availableSpaces.ElementAt(i);
+                string[] gameBoardCopy = (string[]) gameBoard.Clone();
+                gameBoardCopy[availableSpaces.ElementAt(i)] = "O";
+                moveValues.Score = GetBestMove(gameBoardCopy, -10000, 10000, "X", 0);
+                moves.Add(moveValues);
+            }
+           
+            int bestMove = 0;
+            int bestMoveScore = -1000;
+            for (int i = 0; i < moves.Count; i++) {
+                if (moves[i].Score > bestMoveScore) {
+                    bestMoveScore = moves[i].Score;
+                    bestMove = i;
+                }
+            }
+
+            return moves[bestMove].Spot;
         }
 
         private List<int> GetAvailableSpaces(string[] gameBoard) {
@@ -29,59 +51,49 @@ namespace TicTacToe {
             return marker == "O" ? "X" : "O";
         }
 
-        private Moves GetScore(string[] gameBoard, string marker, Moves move) {
-            marker = AlternateMarker(marker);
+        private int GetScore(string[] gameBoard, string marker, int depth) {
+            int score;
             if (marker == "O" && this.winConditions.IsWinner(gameBoard)) {
-                move.Score = 1000;
+                score = 1000 - depth;
             } else if (marker == "X" && this.winConditions.IsWinner(gameBoard)) {
-                move.Score = -1000;
+                score = depth - 1000;
             } else {
-                move.Score = 0;
+                score = 0;
             }
-            return move;
+            return score;
         }
 
-        private Moves GetBestMove(string[] gameBoard, string marker) {
+        private int GetBestMove(string[] gameBoard, int alpha, int beta, string marker, int depth) {
             List<int> availableSpaces = GetAvailableSpaces(gameBoard);
-
+            
             if (this.winConditions.IsWinner(gameBoard) || availableSpaces.Count == 0) {
-                Moves move = new Moves();
-                move = GetScore(gameBoard, marker, move);
-                return move;
-            }
-
-            List<Moves> moves = new List<Moves>();
-
-            for (int i = 0; i < availableSpaces.Count; i++) {
-                Moves moveValues = new Moves();
-                moveValues.Spot = availableSpaces.ElementAt(i);
-                string[] gameBoardCopy = (string[]) gameBoard.Clone();
-                gameBoardCopy[availableSpaces.ElementAt(i)] = marker;
-                int score = GetBestMove(gameBoardCopy, AlternateMarker(marker)).Score;
-                moveValues.Score = score;
-                moves.Add(moveValues);
-            }
-
-            int bestMove = 0;
+                return GetScore(gameBoard, AlternateMarker(marker), depth);
+            } 
+            
             if (marker == "O") {
-                int bestMoveScore = -1000;
-                for (int i = 0; i < moves.Count; i++) {
-                    if (moves[i].Score > bestMoveScore) {
-                        bestMoveScore = moves[i].Score;
-                        bestMove = i;
-                    }
+                for (int i = 0; i < availableSpaces.Count; i++) {
+                    string[] gameBoardCopy = (string[]) gameBoard.Clone();
+                    gameBoardCopy[availableSpaces.ElementAt(i)] = marker;
+                    int score = GetBestMove(gameBoardCopy, alpha, beta, AlternateMarker(marker), depth++);
+                    alpha = Math.Max(alpha, score );
+                    if (beta <= alpha) {
+                        break;
+                    }  
                 }
+                return alpha;
             } else {
-                int bestMoveScore = 1000;
-                for (int i = 0; i < moves.Count; i++) {
-                    if (moves[i].Score < bestMoveScore) {
-                        bestMoveScore = moves[i].Score;
-                        bestMove = i;
-                    }
+                for (int i = 0; i < availableSpaces.Count; i++) {
+                    string[] gameBoardCopy = (string[]) gameBoard.Clone();
+                    gameBoardCopy[availableSpaces.ElementAt(i)] = marker;
+                    int score = GetBestMove(gameBoardCopy, alpha, beta, AlternateMarker(marker), depth++);
+                    beta = Math.Min(beta, score);
+                    if (beta <= alpha) {
+                        break;
+                    }  
                 }
+                return beta;
             }
 
-            return moves[bestMove];
         }
 
     }
