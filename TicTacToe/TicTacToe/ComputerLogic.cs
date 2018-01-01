@@ -22,7 +22,7 @@ namespace TicTacToe {
                 moveValues.Spot = availableSpaces.ElementAt(i);
                 string[] gameBoardCopy = (string[]) gameBoard.Clone();
                 gameBoardCopy[availableSpaces.ElementAt(i)] = "O";
-                moveValues.Score = GetBestMove(gameBoardCopy, -10000, 10000, "X", 0);
+                moveValues.Score = GetScore(gameBoardCopy, -10000, 10000, "X", 0);
                 moves.Add(moveValues);
             }
            
@@ -51,7 +51,7 @@ namespace TicTacToe {
             return marker == "O" ? "X" : "O";
         }
 
-        private int GetScore(string[] gameBoard, string marker, int depth) {
+        private int GetGameScore(string[] gameBoard, string marker, int depth) {
             int score;
             if (marker == "O" && this.winConditions.IsWinner(gameBoard)) {
                 score = 1000 - depth;
@@ -63,20 +63,20 @@ namespace TicTacToe {
             return score;
         }
 
-        private int GetBestMove(string[] gameBoard, int alpha, int beta, string marker, int depth) {
+        private int GetScore(string[] gameBoard, int alpha, int beta, string marker, int depth) {
             List<int> availableSpaces = GetAvailableSpaces(gameBoard);
             
             if (this.winConditions.IsWinner(gameBoard) || availableSpaces.Count == 0) {
-                return GetScore(gameBoard, AlternateMarker(marker), depth);
+                return GetGameScore(gameBoard, AlternateMarker(marker), depth);
             } 
             
             if (marker == "O") {
                 for (int i = 0; i < availableSpaces.Count; i++) {
                     string[] gameBoardCopy = (string[]) gameBoard.Clone();
                     gameBoardCopy[availableSpaces.ElementAt(i)] = marker;
-                    int score = GetBestMove(gameBoardCopy, alpha, beta, AlternateMarker(marker), depth++);
+                    int score = GetScore(gameBoardCopy, alpha, beta, AlternateMarker(marker), depth++);
                     alpha = Math.Max(alpha, score );
-                    if (beta <= alpha) {
+                    if (beta <= alpha || depth == 15) {
                         break;
                     }  
                 }
@@ -85,9 +85,9 @@ namespace TicTacToe {
                 for (int i = 0; i < availableSpaces.Count; i++) {
                     string[] gameBoardCopy = (string[]) gameBoard.Clone();
                     gameBoardCopy[availableSpaces.ElementAt(i)] = marker;
-                    int score = GetBestMove(gameBoardCopy, alpha, beta, AlternateMarker(marker), depth++);
+                    int score = GetScore(gameBoardCopy, alpha, beta, AlternateMarker(marker), depth++);
                     beta = Math.Min(beta, score);
-                    if (beta <= alpha) {
+                    if (beta <= alpha || depth == 15) {
                         break;
                     }  
                 }
