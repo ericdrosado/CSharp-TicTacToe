@@ -29,9 +29,6 @@ namespace TicTacToe {
                 this.io.Print(InvalidEntryPrompt());
                 input = this.io.GetInput();
             }
-            if (this.validateInput.IsInputNumericString(input)) {
-                
-            }
             return input;
         }
 
