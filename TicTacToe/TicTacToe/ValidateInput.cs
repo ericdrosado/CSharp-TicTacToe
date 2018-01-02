@@ -11,5 +11,13 @@ namespace TicTacToe {
         public bool IsInputNumericString(string input) {
             return Int32.TryParse(input, out int number);
         }
+
+        public bool IsInputASingleCharacter(string input) {
+            return input.Length == 1;
+        }
+
+        public bool IsTheSameMarkerAsPlayer(string input, string playerMarker) {
+            return input == playerMarker;
+        }
     }
 }

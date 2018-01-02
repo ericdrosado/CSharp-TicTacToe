@@ -25,7 +25,8 @@ namespace Tests.TicTacToe {
         [InlineData(8)]
         public void AddMarkerToGameBoard(int move) {
             string[] gameBoard = { "0", "1", "2", "3", "4", "5", "6", "7", "8" };
-
+            this.board.SetMarkers("X", "O");
+            
             gameBoard[move] = "X";
             this.board.UpdateBoard(move);
 
