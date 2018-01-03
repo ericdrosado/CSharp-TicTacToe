@@ -5,7 +5,13 @@ using System.Linq;
 
 namespace TicTacToe {
 
-    public class ComputerLogic {
+    public class ComputerLogic
+    {
+
+        private const int MaximumScore = 1000;
+        private const int MinimumScore = -1000;
+        private const int TieScore = 0;
+        private const int OptimalAIDepth = 15;
 
         private WinConditions winConditions;
 
@@ -22,12 +28,12 @@ namespace TicTacToe {
                 moveValues.Spot = availableSpaces.ElementAt(i);
                 string[] gameBoardCopy = (string[]) gameBoard.Clone();
                 gameBoardCopy[availableSpaces.ElementAt(i)] = "O";
-                moveValues.Score = GetScore(gameBoardCopy, -10000, 10000, "X", 0);
+                moveValues.Score = GetScore(gameBoardCopy, MinimumScore, MaximumScore, "X", 0);
                 moves.Add(moveValues);
             }
            
             int bestMove = 0;
-            int bestMoveScore = -1000;
+            int bestMoveScore = MinimumScore;
             for (int i = 0; i < moves.Count; i++) {
                 if (moves[i].Score > bestMoveScore) {
                     bestMoveScore = moves[i].Score;
@@ -54,11 +60,11 @@ namespace TicTacToe {
         private int GetGameScore(string[] gameBoard, string marker, int depth) {
             int score;
             if (marker == "O" && this.winConditions.IsWinner(gameBoard)) {
-                score = 1000 - depth;
+                score = MaximumScore - depth;
             } else if (marker == "X" && this.winConditions.IsWinner(gameBoard)) {
-                score = depth - 1000;
+                score = MinimumScore + depth;
             } else {
-                score = 0;
+                score = TieScore;
             }
             return score;
         }
@@ -68,31 +74,54 @@ namespace TicTacToe {
             
             if (this.winConditions.IsWinner(gameBoard) || availableSpaces.Count == 0) {
                 return GetGameScore(gameBoard, AlternateMarker(marker), depth);
-            } 
-            
-            if (marker == "O") {
-                for (int i = 0; i < availableSpaces.Count; i++) {
-                    string[] gameBoardCopy = (string[]) gameBoard.Clone();
-                    gameBoardCopy[availableSpaces.ElementAt(i)] = marker;
-                    int score = GetScore(gameBoardCopy, alpha, beta, AlternateMarker(marker), depth++);
-                    alpha = Math.Max(alpha, score );
-                    if (beta <= alpha || depth == 15) {
-                        break;
-                    }  
+            }
+
+            for (int i = 0; i < availableSpaces.Count; i++) {
+                string[] gameBoardCopy = (string[]) gameBoard.Clone();
+                gameBoardCopy[availableSpaces.ElementAt(i)] = marker;
+                int score = GetScore(gameBoardCopy, alpha, beta, AlternateMarker(marker), depth++);
+
+                if (marker == "O") {
+                    alpha = Math.Max(alpha, score);
+                } else {
+                    beta = Math.Min(beta, score);
                 }
+                
+                if (beta <= alpha || depth == OptimalAIDepth) {
+                        break;
+                }  
+                
+            }
+
+            if (marker == "O") {
                 return alpha;
             } else {
-                for (int i = 0; i < availableSpaces.Count; i++) {
-                    string[] gameBoardCopy = (string[]) gameBoard.Clone();
-                    gameBoardCopy[availableSpaces.ElementAt(i)] = marker;
-                    int score = GetScore(gameBoardCopy, alpha, beta, AlternateMarker(marker), depth++);
-                    beta = Math.Min(beta, score);
-                    if (beta <= alpha || depth == 15) {
-                        break;
-                    }  
-                }
                 return beta;
             }
+
+//            if (marker == "O") {
+//                for (int i = 0; i < availableSpaces.Count; i++) {
+//                    string[] gameBoardCopy = (string[]) gameBoard.Clone();
+//                    gameBoardCopy[availableSpaces.ElementAt(i)] = marker;
+//                    int score = GetScore(gameBoardCopy, alpha, beta, AlternateMarker(marker), depth++);
+//                    alpha = Math.Max(alpha, score);
+//                    if (beta <= alpha || depth == optimalAIDepth) {
+//                        break;
+//                    }  
+//                }
+//                return alpha;
+//            } else {
+//                for (int i = 0; i < availableSpaces.Count; i++) {
+//                    string[] gameBoardCopy = (string[]) gameBoard.Clone();
+//                    gameBoardCopy[availableSpaces.ElementAt(i)] = marker;
+//                    int score = GetScore(gameBoardCopy, alpha, beta, AlternateMarker(marker), depth++);
+//                    beta = Math.Min(beta, score);
+//                    if (beta <= alpha || depth == optimalAIDepth) {
+//                        break;
+//                    }  
+//                }
+//                return beta;
+//            }
 
         }
 

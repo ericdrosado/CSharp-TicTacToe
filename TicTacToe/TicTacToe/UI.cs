@@ -7,6 +7,9 @@ namespace TicTacToe {
         private IO io;
         private ValidateInput validateInput;
 
+        private const int FourByFourBoard = 4;
+        private const int MaximumSingleDigitNumber = 9;
+
         public UI(IO io, ValidateInput validateInput) {
             this.io = io;
             this.validateInput = validateInput;
@@ -72,7 +75,7 @@ namespace TicTacToe {
                 string row = BuildRow(gameBoard, boardSize, index);
                 board = string.Concat(board, row);
                 if (index < boardSize * boardSize - boardSize) {
-                    board = boardSize == 4? string.Concat(board, "\n                      " + "---+---+---+---\n"): 
+                    board = boardSize == FourByFourBoard? string.Concat(board, "\n                      " + "---+---+---+---\n"): 
                         string.Concat(board, "\n                      " + "---+---+---\n");
                 }
             }
@@ -83,7 +86,7 @@ namespace TicTacToe {
             string row = index > 9? "                      " + gameBoard[index]:
                 "                       " + gameBoard[index];
             for (int i = index + 1; i < index + boardSize; i++) {
-                row = i > 9? string.Concat(row, " |" + gameBoard[i]):
+                row = i > MaximumSingleDigitNumber? string.Concat(row, " |" + gameBoard[i]):
                     string.Concat(row, " | " + gameBoard[i]);
             }
             return row;
