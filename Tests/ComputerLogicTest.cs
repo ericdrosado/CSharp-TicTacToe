@@ -117,20 +117,20 @@ namespace Tests.TicTacToe {
         
         [Fact]
         public void ExpectAIToBlockRow3For4x4() {
-            string[] gameBoard = { " ", "O", " ", " ", " ", " ", " ", " ", "X", " ", "X", "X", " ", "O", " ", " " };
+            string[] gameBoard = { " ", "O", " ", " ", " ", " ", " ", " ", "X", "X", " ", "X", " ", "O", " ", " " };
 
             int move = this.computerLogic.GetMove(gameBoard);
 
-            Assert.Equal(9, move);
+            Assert.Equal(10, move);
         }
         
         [Fact]
         public void ExpectAIToBlockRow4For4x4() {
-            string[] gameBoard = { " ", " ", " ", " ", "O", " ", " ", " ", " ", " ", "O", " ", "X", "X", " ", "X" };
+            string[] gameBoard = { " ", " ", " ", " ", "O", " ", " ", " ", " ", " ", "O", " ", "X", "X", "X", " " };
 
             int move = this.computerLogic.GetMove(gameBoard);
 
-            Assert.Equal(14, move);
+            Assert.Equal(15, move);
         }
         
         [Fact]

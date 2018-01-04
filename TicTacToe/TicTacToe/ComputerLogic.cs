@@ -11,7 +11,7 @@ namespace TicTacToe {
         private const int MaximumScore = 1000;
         private const int MinimumScore = -1000;
         private const int TieScore = 0;
-        private const int OptimalAIDepth = 15;
+        private const int OptimalAIDepth = 10;
 
         private WinConditions winConditions;
 
@@ -23,11 +23,11 @@ namespace TicTacToe {
             List<Moves> moves = new List<Moves>();
             List<int> availableSpaces = GetAvailableSpaces(gameBoard);
             
-            for (int i = 0; i < availableSpaces.Count; i++) {
+            for (int index = 0; index < availableSpaces.Count; index++) {
                 Moves moveValues = new Moves();
-                moveValues.Spot = availableSpaces.ElementAt(i);
+                moveValues.Spot = availableSpaces.ElementAt(index);
                 string[] gameBoardCopy = (string[]) gameBoard.Clone();
-                gameBoardCopy[availableSpaces.ElementAt(i)] = "O";
+                gameBoardCopy[availableSpaces.ElementAt(index)] = "O";
                 moveValues.Score = GetScore(gameBoardCopy, MinimumScore, MaximumScore, "X", 0);
                 moves.Add(moveValues);
             }

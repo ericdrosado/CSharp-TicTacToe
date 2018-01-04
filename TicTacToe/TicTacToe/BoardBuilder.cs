@@ -1,19 +1,24 @@
-﻿namespace TicTacToe {
+﻿using System;
+using System.Runtime.CompilerServices;
+
+namespace TicTacToe {
     
     public class BoardBuilder {
-        private const int FourByFourBoard = 4;
+
         private const int MaximumSingleDigitNumber = 9;
+        private const int CellCorrection = 2;
+        private const int NumberOfBoardsDisplayed = 2;
         
         public string BuildGameBoard(string[] gameBoard, int boardSize) {
             string board = "";
-            for (int index = 0; index <= boardSize * boardSize - boardSize; index += boardSize)
-            {
+            for (int index = 0; index <= boardSize * boardSize - boardSize; index += boardSize) {
                 string row = BuildRow(gameBoard, boardSize, index);
                 string displayRow = BuildDisplayRow(boardSize, index);
                 board = string.Concat(board, row, displayRow);
                 if (index < boardSize * boardSize - boardSize) {
-                    board = boardSize == FourByFourBoard? string.Concat(board, "\n              " + "---+---+---+---  ---+---+---+---\n"): 
-                        string.Concat(board, "\n              " + "---+---+---  ---+---+---\n");
+                    string horizontalFrame = BuildHorizontalFrame(boardSize);
+                    horizontalFrame = string.Concat(horizontalFrame, "\n");
+                    board = string.Concat(board, horizontalFrame);
                 }
             }
             return board;
@@ -35,6 +40,19 @@
                     string.Concat(row, " | " + i);
             }
             return row;
-        }    
+        }
+
+        private string BuildHorizontalFrame(int boardSize) {
+            string horizontalFrame = "\n              " + "---";
+            for (int i = 0; i < boardSize * NumberOfBoardsDisplayed - CellCorrection; i++) {
+                string cellFrame = "+---";
+                horizontalFrame = string.Concat(horizontalFrame, cellFrame);
+                if (i == boardSize - CellCorrection) {
+                    string outerCellFrame = "  ---";
+                    horizontalFrame = string.Concat(horizontalFrame, outerCellFrame);
+                }
+            }
+            return horizontalFrame;
+        }
     }
 }
