@@ -10,7 +10,7 @@ namespace TicTacToe {
         public UI(IO io, ValidateInput validateInput) {
             this.io = io;
             this.validateInput = validateInput;
-        }
+        } 
 
         public int GetMove(string[] board) {
             string input = this.io.GetInput();
@@ -20,6 +20,27 @@ namespace TicTacToe {
             }
             int move = Int32.Parse(input);
             return move;
+        }
+
+        public string GetMarkerChoice(string[] board) {
+            this.io.Print(ChooseHumanMarkerPrompt());
+            string input = this.io.GetInput();
+            while (!this.validateInput.IsInputASingleCharacter(input) || this.validateInput.IsInputOnBoard(input, board)) {
+                this.io.Print(InvalidEntryPrompt());
+                input = this.io.GetInput();
+            }
+            return input;
+        }
+
+        public string GetAIMarkerChoice(string playerMarker, string[] board) {
+            this.io.Print(ChooseAIMarkerPrompt());
+            string input = this.io.GetInput();
+            while (!this.validateInput.IsInputASingleCharacter(input) || this.validateInput.IsTheSameMarkerAsPlayer(input, playerMarker) ||
+                      this.validateInput.IsInputOnBoard(input, board)) {
+                this.io.Print(InvalidEntryPrompt());
+                input = this.io.GetInput();
+            }
+            return input;
         }
 
         private void IncorrectInputView(string[] board) {
@@ -77,6 +98,22 @@ namespace TicTacToe {
             "|enter.                                                 |\n" +
             "+-------------------------------------------------------+";
         }
+        
+        private string ChooseHumanMarkerPrompt() {
+            return
+                "+-------------------------------------------------------+\n" +
+                "|Please choose a single character as your marker and    |\n" +
+                "|press enter.                                           |\n" +
+                "+-------------------------------------------------------+";
+        }
+        
+        private string ChooseAIMarkerPrompt() {
+            return
+                "+-------------------------------------------------------+\n" +
+                "|Please choose a single character as the computer's     |\n" +
+                "|marker and press enter.                                |\n" +
+                "+-------------------------------------------------------+";
+        }
 
         private string BoardHeader(string headerText) {
             return
@@ -98,8 +135,7 @@ namespace TicTacToe {
         private string InvalidEntryPrompt() {
             return 
             "+-------------------------------------------------------+\n" +
-            "|The entry used is not a valid entry. Be sure to choose |\n" +
-            "|a value from 0 - 8 that has not been chosen.           |\n" +
+            "|The entry used is not a valid entry.                   |\n" +
             "+-------------------------------------------------------+";
         }
 

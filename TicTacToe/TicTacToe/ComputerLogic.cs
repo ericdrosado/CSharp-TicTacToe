@@ -12,8 +12,8 @@ namespace TicTacToe {
             this.winConditions = winConditions;
         }
 
-        public int GetMove(string[] gameBoard) {
-            return GetBestMove(gameBoard, "O").Spot;
+        public int GetMove(string[] gameBoard, string marker) {
+            return GetBestMove(gameBoard, marker).Spot;
         }
 
         private List<int> GetAvailableSpaces(string[] gameBoard) {
@@ -26,14 +26,14 @@ namespace TicTacToe {
         }
 
         private string AlternateMarker(string marker) {
-            return marker == "O" ? "X" : "O";
+            return marker == Board.AiMarker ? Board.PlayerMarker : Board.AiMarker;
         }
 
         private Moves GetScore(string[] gameBoard, string marker, Moves move) {
             marker = AlternateMarker(marker);
-            if (marker == "O" && this.winConditions.IsWinner(gameBoard)) {
+            if (marker == Board.AiMarker && this.winConditions.IsWinner(gameBoard)) {
                 move.Score = 1000;
-            } else if (marker == "X" && this.winConditions.IsWinner(gameBoard)) {
+            } else if (marker == Board.PlayerMarker && this.winConditions.IsWinner(gameBoard)) {
                 move.Score = -1000;
             } else {
                 move.Score = 0;
@@ -64,7 +64,7 @@ namespace TicTacToe {
             }
 
             int bestMove = 0;
-            if (marker == "O") {
+            if (marker == Board.AiMarker) {
                 int bestMoveScore = -1000;
                 for (int i = 0; i < moves.Count; i++) {
                     if (moves[i].Score > bestMoveScore) {

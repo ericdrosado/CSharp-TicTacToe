@@ -63,5 +63,40 @@ namespace Tests.TicTacToe {
             Assert.False(hasNumeric);
         }
 
+        [Theory]
+        [InlineData("w")]
+        [InlineData("!")]
+        [InlineData("{")]
+        [InlineData("T")]
+        public void ReturnTrueIfInputIsASingleCharacter(string input) {
+            bool hasSingleCharacter = this.validateInput.IsInputASingleCharacter(input);
+
+            Assert.True(hasSingleCharacter);
+        }
+        
+        [Theory]
+        [InlineData("")]
+        [InlineData("Te")]
+        [InlineData("Test")]
+        [InlineData("!@")]
+        public void ReturnFalseIfInputIsNotASingleCharacter(string input) {
+            bool hasSingleCharacter = this.validateInput.IsInputASingleCharacter(input);
+
+            Assert.False(hasSingleCharacter);
+        }
+
+        [Fact]
+        public void ReturnTrueIfComputerMarkerIsTheSameAsPlayer() {
+            bool hasSameMarker = this.validateInput.IsTheSameMarkerAsPlayer("X", "X");
+
+            Assert.True(hasSameMarker);
+        }
+        
+        [Fact]
+        public void ReturnFalseIfComputerMarkerIsNotTheSameAsPlayer() {
+            bool hasSameMarker = this.validateInput.IsTheSameMarkerAsPlayer("X", "O");
+
+            Assert.False(hasSameMarker);
+        }
     }
 }
