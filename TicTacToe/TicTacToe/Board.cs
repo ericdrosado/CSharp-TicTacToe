@@ -6,10 +6,10 @@ namespace TicTacToe {
     
     public class Board {
 
-        private string[] gameBoard = {"0", "1", "2", "3", "4", "5", "6", "7", "8"};
         private string currentMarker;
         private static string playerMarker;
         private static string aiMarker;
+        private string[] gameBoard = {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
 
         public string[] GameBoard {
             get { return gameBoard; }
@@ -34,7 +34,8 @@ namespace TicTacToe {
         }
 
         public void UpdateBoard(int move) {
-            gameBoard[move] = currentMarker;
+            int index = Array.IndexOf(gameBoard, move.ToString());
+            gameBoard[index] = currentMarker;
             SwitchMarker();
         }
 
