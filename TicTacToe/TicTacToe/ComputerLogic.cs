@@ -46,10 +46,12 @@ namespace TicTacToe {
 
         private List<int> GetAvailableSpaces(string[] gameBoard) {
             List<int> availableSpaces = new List<int>();
-            IEnumerable<string> availableSpacesStrings = gameBoard.Where(cell => Int32.TryParse(cell, out int number));
-            foreach (string cell in availableSpacesStrings) {
-                availableSpaces.Add(Int32.Parse(cell));
+            for (int index = 0; index < gameBoard.Length; index++) {
+                if (gameBoard[index] != "X" && gameBoard[index] != "O") {
+                    availableSpaces.Add(index);
+                }
             }
+            
             return availableSpaces;
         }
 
@@ -89,8 +91,7 @@ namespace TicTacToe {
                 
                 if (beta <= alpha || depth == OptimalAIDepth) {
                         break;
-                }  
-                
+                }   
             }
 
             if (marker == "O") {
@@ -98,30 +99,6 @@ namespace TicTacToe {
             } else {
                 return beta;
             }
-
-//            if (marker == "O") {
-//                for (int i = 0; i < availableSpaces.Count; i++) {
-//                    string[] gameBoardCopy = (string[]) gameBoard.Clone();
-//                    gameBoardCopy[availableSpaces.ElementAt(i)] = marker;
-//                    int score = GetScore(gameBoardCopy, alpha, beta, AlternateMarker(marker), depth++);
-//                    alpha = Math.Max(alpha, score);
-//                    if (beta <= alpha || depth == optimalAIDepth) {
-//                        break;
-//                    }  
-//                }
-//                return alpha;
-//            } else {
-//                for (int i = 0; i < availableSpaces.Count; i++) {
-//                    string[] gameBoardCopy = (string[]) gameBoard.Clone();
-//                    gameBoardCopy[availableSpaces.ElementAt(i)] = marker;
-//                    int score = GetScore(gameBoardCopy, alpha, beta, AlternateMarker(marker), depth++);
-//                    beta = Math.Min(beta, score);
-//                    if (beta <= alpha || depth == optimalAIDepth) {
-//                        break;
-//                    }  
-//                }
-//                return beta;
-//            }
 
         }
 

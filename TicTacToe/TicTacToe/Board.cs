@@ -6,7 +6,7 @@ namespace TicTacToe {
     
     public class Board {
 
-        private string[] gameBoard = {"0", "1", "2", "3", "4", "5", "6", "7", "8"};
+        private string[] gameBoard;
         private string currentMarker = "X";
 
         public string[] GameBoard {
@@ -29,7 +29,7 @@ namespace TicTacToe {
 
         private void AssignSpaces() {
             for (int i = 0; i < gameBoard.Length; i++) {
-                gameBoard[i] = (i).ToString();
+                gameBoard[i] = " ";
             }
         }
         
@@ -39,7 +39,7 @@ namespace TicTacToe {
         }
 
         public IEnumerable<string> GetAvailableSpaces() {
-            return gameBoard.Where(cell => Int32.TryParse(cell, out int number));
+            return gameBoard.Where(cell => cell == " ");
         }
 
         public void SwitchMarker() {

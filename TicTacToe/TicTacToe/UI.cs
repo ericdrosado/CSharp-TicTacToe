@@ -3,21 +3,20 @@
 namespace TicTacToe {
 
     public class UI {
-        
+
+        private BoardBuilder boardBuilder;
         private IO io;
         private ValidateInput validateInput;
 
-        private const int FourByFourBoard = 4;
-        private const int MaximumSingleDigitNumber = 9;
-
-        public UI(IO io, ValidateInput validateInput) {
+        public UI(BoardBuilder boardBuilder, IO io, ValidateInput validateInput) {
+            this.boardBuilder = boardBuilder;
             this.io = io;
             this.validateInput = validateInput;
         }
 
         public int GetMove(string[] board, int boardSize) {
             string input = this.io.GetInput();
-            while (!this.validateInput.IsInputOnBoard(input, board) || !this.validateInput.IsInputNumericString(input)) {
+            while (!this.validateInput.IsInputNumericString(input)) {
                 IncorrectInputView(board, boardSize);
                 input = this.io.GetInput();
             }
@@ -58,38 +57,15 @@ namespace TicTacToe {
             }
         }
 
-        public void NewGameView(string[] board) {
+        public void NewGameView() {
             this.io.Print(Greeting());
             this.io.Print(Instructions());
             this.io.Print(ChooseBoardSizePrompt());
         }
 
         public void BoardView(string[] board, int boardSize) {
-            string gameBoard = BuildBoard(board, boardSize);
+            string gameBoard = this.boardBuilder.BuildGameBoard(board, boardSize);
             this.io.Print(BoardBorder(gameBoard));
-        }
-
-        public string BuildBoard(string[] gameBoard, int boardSize) {
-            string board = "";
-            for (int index = 0; index <= boardSize * boardSize - boardSize; index += boardSize) {
-                string row = BuildRow(gameBoard, boardSize, index);
-                board = string.Concat(board, row);
-                if (index < boardSize * boardSize - boardSize) {
-                    board = boardSize == FourByFourBoard? string.Concat(board, "\n                      " + "---+---+---+---\n"): 
-                        string.Concat(board, "\n                      " + "---+---+---\n");
-                }
-            }
-            return board;
-        }
-
-        private string BuildRow(string[] gameBoard, int boardSize, int index) {
-            string row = index > 9? "                      " + gameBoard[index]:
-                "                       " + gameBoard[index];
-            for (int i = index + 1; i < index + boardSize; i++) {
-                row = i > MaximumSingleDigitNumber? string.Concat(row, " |" + gameBoard[i]):
-                    string.Concat(row, " | " + gameBoard[i]);
-            }
-            return row;
         }
 
         private string Greeting() {

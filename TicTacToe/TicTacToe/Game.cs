@@ -19,7 +19,7 @@ namespace TicTacToe {
         }
 
         public void StartGame() {
-            this.ui.NewGameView(this.board.GameBoard);
+            this.ui.NewGameView();
             int boardSize = this.ui.GetBoardSize();
             this.board.CreateBoard(boardSize);
             while (this.board.GetAvailableSpaces().Count() > 0) {

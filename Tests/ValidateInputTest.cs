@@ -16,33 +16,6 @@ namespace Tests.TicTacToe {
 
         [Theory]
         [InlineData("0")]
-        [InlineData("1")]
-        [InlineData("2")]
-        [InlineData("3")]
-        [InlineData("4")]
-        [InlineData("5")]
-        [InlineData("6")]
-        [InlineData("7")]
-        [InlineData("8")]
-        public void ReturnTrueIfInputIsOnBoard(string input) {
-            bool hasValue = this.validateInput.IsInputOnBoard(input, this.board.GameBoard);
-
-            Assert.True(hasValue);
-        }
-
-        [Theory]
-        [InlineData("9")]
-        [InlineData("1000")]
-        [InlineData("!")]
-        [InlineData(" ")]
-        public void ReturnFalseIfInputIsNotOnBoard(string input) {
-            bool hasValue = this.validateInput.IsInputOnBoard(input, this.board.GameBoard);
-
-            Assert.False(hasValue);
-        }
-
-        [Theory]
-        [InlineData("0")]
         [InlineData("10")]
         [InlineData("55")]
         [InlineData("100")]

@@ -15,7 +15,7 @@ namespace TicTacToe {
 
         private bool IsWin(List<List<string>> collections) {
             foreach (var collection in collections) {
-                if (collection.All(cell => cell == collection.First())) {
+                if (collection.All(cell => cell == collection.First() && collection.All(spot => spot != " "))) {
                     return true;
                 }
             }
