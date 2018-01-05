@@ -19,15 +19,17 @@ namespace TicTacToe {
         }
 
         public void StartGame() {
-            this.ui.NewGameView(this.board.GameBoard);
+            this.ui.NewGameView();
             string playerMarker = this.ui.GetMarkerChoice(this.board.GameBoard);
             string aiMarker = this.ui.GetAIMarkerChoice(playerMarker, this.board.GameBoard);
             this.board.SetMarkers(playerMarker, aiMarker);
+            int boardSize = this.ui.GetBoardSize();
+            this.board.CreateBoard(boardSize);
             while (this.board.GetAvailableSpaces().Count() > 0) {
-                this.ui.BoardView(this.board.GameBoard);
+                this.ui.BoardView(this.board.GameBoard, boardSize);
                 this.ui.PrintTurnPrompt(this.board.CurrentMarker);
-                int move = this.board.CurrentMarker == Board.AiMarker ? this.computerLogic.GetMove(this.board.GameBoard, Board.AiMarker) : 
-                    this.ui.GetMove(this.board.GameBoard);
+                int move = this.board.CurrentMarker == Board.AiMarker ? this.computerLogic.GetMove(this.board.GameBoard) : 
+                    this.ui.GetMove(this.board.GameBoard, boardSize);
                 this.board.UpdateBoard(move);
                 if (this.winConditions.IsWinner(this.board.GameBoard) || this.board.GetAvailableSpaces().Count() == 0) { 
                     this.board.SwitchMarker();
@@ -35,7 +37,7 @@ namespace TicTacToe {
                 }
                 Console.Clear();
             }
-            this.ui.BoardView(this.board.GameBoard);
+            this.ui.BoardView(this.board.GameBoard, boardSize);
             this.ui.PrintEndgamePrompt(this.winConditions.IsWinner(this.board.GameBoard), this.board.CurrentMarker);
         }
 

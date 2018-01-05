@@ -15,7 +15,7 @@ namespace TicTacToe {
 
         private bool IsWin(List<List<string>> collections) {
             foreach (var collection in collections) {
-                if (collection.All(cell => cell == collection.First())) {
+                if (collection.All(cell => cell == collection.First() && collection.All(spot => spot != " "))) {
                     return true;
                 }
             }
@@ -41,7 +41,7 @@ namespace TicTacToe {
             for (int i = 0; i < boardDimension; i++) {
                 List<string> column = new List<string>();
                 column.Add(gameBoard[i]);
-                for (int j = (i + boardDimension); j <= (i + (boardDimension * 2)); j += boardDimension) {
+                for (int j = (i + boardDimension); j <= (i + (boardDimension * (boardDimension - 1))); j += boardDimension) {
                     column.Add(gameBoard[j]);
                 }
                 columns.Add(column);

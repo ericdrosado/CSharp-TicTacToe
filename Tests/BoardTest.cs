@@ -14,6 +14,26 @@ namespace Tests.TicTacToe {
         }
 
         [Theory]
+        [InlineData((3))]
+        public void BuildA3x3GameBoardBasedOnDimension(int boardDimension) {
+            string[] gameBoard = { " ", " ", " ", " ", " ", " ", " ", " ", " " };
+            
+            this.board.CreateBoard(boardDimension);
+            
+            Assert.Equal(this.board.GameBoard, gameBoard );
+        }
+        
+        [Theory]
+        [InlineData((4))]
+        public void BuildA4x4GameBoardBasedOnDimension(int boardDimension) {
+            string[] gameBoard = { " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " " };
+            
+            this.board.CreateBoard(boardDimension);
+            
+            Assert.Equal(this.board.GameBoard, gameBoard );
+        }
+
+        [Theory]
         [InlineData(1)]
         [InlineData(2)]
         [InlineData(3)]
@@ -25,7 +45,8 @@ namespace Tests.TicTacToe {
         [InlineData(9)]
         public void AddMarkerToGameBoard(int move) {
             this.board.SetMarkers("X", "O");
-            string[] gameBoard = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+            this.board.CreateBoard(3);
+            string[] gameBoard = { " ", " ", " ", " ", " ", " ", " ", " ", " " };
 
             gameBoard[move - 1] = "X";
             this.board.UpdateBoard(move);
@@ -39,6 +60,7 @@ namespace Tests.TicTacToe {
         [InlineData(new int[] { 1, 2, 3, 5, 6, 8 })]
         [InlineData(new int[] { 6, 7, 8 })]
         public void CheckAvailableSpaceCount(int[] moves) {
+            this.board.CreateBoard(3);
             int availableMoves = this.board.GameBoard.Length - moves.Length;
 
             foreach (int move in moves ) {

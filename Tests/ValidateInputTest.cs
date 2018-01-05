@@ -15,33 +15,6 @@ namespace Tests.TicTacToe {
         }
 
         [Theory]
-        [InlineData("1")]
-        [InlineData("2")]
-        [InlineData("3")]
-        [InlineData("4")]
-        [InlineData("5")]
-        [InlineData("6")]
-        [InlineData("7")]
-        [InlineData("8")]
-        [InlineData("9")]
-        public void ReturnTrueIfInputIsOnBoard(string input) {
-            bool hasValue = this.validateInput.IsInputOnBoard(input, this.board.GameBoard);
-
-            Assert.True(hasValue);
-        }
-
-        [Theory]
-        [InlineData("10")]
-        [InlineData("1000")]
-        [InlineData("!")]
-        [InlineData(" ")]
-        public void ReturnFalseIfInputIsNotOnBoard(string input) {
-            bool hasValue = this.validateInput.IsInputOnBoard(input, this.board.GameBoard);
-
-            Assert.False(hasValue);
-        }
-
-        [Theory]
         [InlineData("0")]
         [InlineData("10")]
         [InlineData("55")]
@@ -61,6 +34,25 @@ namespace Tests.TicTacToe {
             bool hasNumeric = this.validateInput.IsInputNumericString(input);
 
             Assert.False(hasNumeric);
+        }
+        
+        [Theory]
+        [InlineData("3")]
+        [InlineData("4")]
+        public void ReturnTrueIfBoardSizeIsCorrect(string input) {
+            bool hasCorrectBoardSize = this.validateInput.IsCorrectBoardSize(input);
+
+            Assert.True(hasCorrectBoardSize);
+        }
+
+        [Theory]
+        [InlineData("2")]
+        [InlineData("5")]
+        [InlineData("10")]
+        public void ReturnFalseIfBoardSizeIsIncorrect(string input) {
+            bool hasCorrectBoardSize = this.validateInput.IsCorrectBoardSize(input);
+
+            Assert.False(hasCorrectBoardSize);
         }
 
         [Theory]

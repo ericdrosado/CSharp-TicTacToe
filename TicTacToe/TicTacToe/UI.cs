@@ -3,19 +3,21 @@
 namespace TicTacToe {
 
     public class UI {
-        
+
+        private BoardBuilder boardBuilder;
         private IO io;
         private ValidateInput validateInput;
 
-        public UI(IO io, ValidateInput validateInput) {
+        public UI(BoardBuilder boardBuilder, IO io, ValidateInput validateInput) {
+            this.boardBuilder = boardBuilder;
             this.io = io;
             this.validateInput = validateInput;
         } 
 
-        public int GetMove(string[] board) {
+        public int GetMove(string[] board, int boardSize) {
             string input = this.io.GetInput();
-            while (!this.validateInput.IsInputOnBoard(input, board) || !this.validateInput.IsInputNumericString(input)) {
-                IncorrectInputView(board);
+            while (!this.validateInput.IsInputNumericString(input)) {
+                IncorrectInputView(board, boardSize);
                 input = this.io.GetInput();
             }
             int move = Int32.Parse(input);
@@ -25,7 +27,7 @@ namespace TicTacToe {
         public string GetMarkerChoice(string[] board) {
             this.io.Print(ChooseHumanMarkerPrompt());
             string input = this.io.GetInput();
-            while (!this.validateInput.IsInputASingleCharacter(input) || this.validateInput.IsInputOnBoard(input, board)) {
+            while (!this.validateInput.IsInputASingleCharacter(input)) {
                 this.io.Print(InvalidEntryPrompt());
                 input = this.io.GetInput();
             }
@@ -35,18 +37,32 @@ namespace TicTacToe {
         public string GetAIMarkerChoice(string playerMarker, string[] board) {
             this.io.Print(ChooseAIMarkerPrompt());
             string input = this.io.GetInput();
-            while (!this.validateInput.IsInputASingleCharacter(input) || this.validateInput.IsTheSameMarkerAsPlayer(input, playerMarker) ||
-                      this.validateInput.IsInputOnBoard(input, board)) {
+            while (!this.validateInput.IsInputASingleCharacter(input) || this.validateInput.IsTheSameMarkerAsPlayer(input, playerMarker)) {
                 this.io.Print(InvalidEntryPrompt());
                 input = this.io.GetInput();
             }
             return input;
         }
 
-        private void IncorrectInputView(string[] board) {
+        public int GetBoardSize() {
+            string input = this.io.GetInput();
+            while (!this.validateInput.IsInputNumericString(input) || !this.validateInput.IsCorrectBoardSize(input)) {
+                IncorrectBoardSizeView();
+                input = this.io.GetInput();
+            }
+            int boardSize = Int32.Parse(input);
+            return boardSize;
+        }
+
+        private void IncorrectInputView(string[] board, int boardSize) {
             Console.Clear();
-            BoardView(board);
+            BoardView(board, boardSize);
             this.io.Print(InvalidEntryPrompt());
+        }
+
+        private void IncorrectBoardSizeView() {
+            Console.Clear();
+            this.io.Print(IncorrectBoardSizePrompt());
         }
 
         public void PrintTurnPrompt(string marker) {
@@ -61,23 +77,15 @@ namespace TicTacToe {
             }
         }
 
-        public void NewGameView(string[] board) {
+        public void NewGameView() {
             this.io.Print(Greeting());
             this.io.Print(Instructions());
+            this.io.Print(ChooseBoardSizePrompt());
         }
 
-        public void BoardView(string[] board) {
-            string gameBoard = GameBoard(board);
+        public void BoardView(string[] board, int boardSize) {
+            string gameBoard = this.boardBuilder.BuildGameBoard(board, boardSize);
             this.io.Print(BoardBorder(gameBoard));
-        }
-
-        public string GameBoard(string[] gameBoard) {
-            return
-            "                       " + gameBoard[0] + " | " + gameBoard[1] + " | " + gameBoard[2] +
-            "\n                      " + "---+---+---\n" +
-            "                       " + gameBoard[3] + " | " + gameBoard[4] + " | " + gameBoard[5] +
-            "\n                      " + "---+---+---\n" +
-            "                       " + gameBoard[6] + " | " + gameBoard[7] + " | " + gameBoard[8] + "\n";
         }
 
         private string Greeting() {
@@ -115,6 +123,14 @@ namespace TicTacToe {
                 "+-------------------------------------------------------+";
         }
 
+        private string ChooseBoardSizePrompt() {
+            return
+            "+-------------------------------------------------------+\n" +
+            "|Please choose the size of the board you would like to  |\n" +
+            "|play on. Enter '3' for 3X3 or '4' for 4X4 board.       |\n" +
+            "+-------------------------------------------------------+";
+        }
+
         private string BoardHeader(string headerText) {
             return
             headerText + "\n" +
@@ -124,7 +140,7 @@ namespace TicTacToe {
         private string BoardBorder(string board) {
             return
             "+-------------------------------------------------------+\n" +
-            board +
+            board + "\n" +
             "+-------------------------------------------------------+\n";
         }
 
@@ -136,6 +152,14 @@ namespace TicTacToe {
             return 
             "+-------------------------------------------------------+\n" +
             "|The entry used is not a valid entry.                   |\n" +
+            "+-------------------------------------------------------+";
+        }
+
+        private string IncorrectBoardSizePrompt() {
+            return 
+            "+-------------------------------------------------------+\n" +
+            "|The entry used is not a valid entry. Be sure to input  |\n" +
+            "|an entry of '3' for 3X3 or '4' for 4X4.                |\n" +
             "+-------------------------------------------------------+";
         }
 

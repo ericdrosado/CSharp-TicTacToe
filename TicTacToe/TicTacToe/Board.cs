@@ -5,11 +5,12 @@ using System.Linq;
 namespace TicTacToe {
     
     public class Board {
-
+    
+        private const int BoardCorrection = 1;
         private string currentMarker;
         private static string playerMarker;
         private static string aiMarker;
-        private string[] gameBoard = {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
+        private string[] gameBoard;
 
         public string[] GameBoard {
             get { return gameBoard; }
@@ -33,14 +34,30 @@ namespace TicTacToe {
             get { return currentMarker; }
         }
 
+        public void CreateBoard(int boardDimension) {
+            BuildBoard(boardDimension);
+            AssignSpaces();
+        }
+
+        private void BuildBoard(int boardDimension) {
+            int totalSpaces = (int) Math.Pow(boardDimension, 2);
+            gameBoard = new string[totalSpaces];
+        }
+
+        private void AssignSpaces() {
+            for (int i = 0; i < gameBoard.Length; i++) {
+                gameBoard[i] = " ";
+            }
+        }
+        
         public void UpdateBoard(int move) {
-            int index = Array.IndexOf(gameBoard, move.ToString());
+            int index = move - BoardCorrection;
             gameBoard[index] = currentMarker;
             SwitchMarker();
         }
 
         public IEnumerable<string> GetAvailableSpaces() {
-            return gameBoard.Where(cell => Int32.TryParse(cell, out int number));
+            return gameBoard.Where(cell => cell == " ");
         }
 
         public void SwitchMarker() {
