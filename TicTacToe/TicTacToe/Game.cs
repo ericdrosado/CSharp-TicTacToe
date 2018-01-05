@@ -20,12 +20,13 @@ namespace TicTacToe {
 
         public void StartGame() {
             this.ui.NewGameView();
-            string playerMarker = this.ui.GetMarkerChoice(this.board.GameBoard);
-            string aiMarker = this.ui.GetAIMarkerChoice(playerMarker, this.board.GameBoard);
-            this.board.SetMarkers(playerMarker, aiMarker);
             int boardSize = this.ui.GetBoardSize();
             this.board.CreateBoard(boardSize);
+            string playerMarker = this.ui.GetMarkerChoice(this.board.GameBoard);
+            string aiMarker = this.ui.GetAIMarkerChoice(playerMarker, this.board.GameBoard);
+            Console.Clear();
             while (this.board.GetAvailableSpaces().Count() > 0) {
+                this.board.SetMarkers(playerMarker, aiMarker);
                 this.ui.BoardView(this.board.GameBoard, boardSize);
                 this.ui.PrintTurnPrompt(this.board.CurrentMarker);
                 int move = this.board.CurrentMarker == Board.AiMarker ? this.computerLogic.GetMove(this.board.GameBoard) : 
