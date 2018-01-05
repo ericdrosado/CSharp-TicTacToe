@@ -5,8 +5,10 @@ using Xunit;
 
 namespace Tests.TicTacToe {
 
-    public class BoardTest {
+    public class BoardTest
+    {
 
+        private const int BoardIndexCorrection = 1;
         private Board board;
         
         public BoardTest() {
@@ -48,8 +50,8 @@ namespace Tests.TicTacToe {
             this.board.CreateBoard(3);
             string[] gameBoard = { " ", " ", " ", " ", " ", " ", " ", " ", " " };
 
-            gameBoard[move - 1] = "X";
-            this.board.UpdateBoard(move);
+            gameBoard[move - BoardIndexCorrection] = "X";
+            this.board.UpdateBoard(move - BoardIndexCorrection);
 
             Assert.Equal(gameBoard, this.board.GameBoard);
         }
@@ -64,7 +66,7 @@ namespace Tests.TicTacToe {
             int availableMoves = this.board.GameBoard.Length - moves.Length;
 
             foreach (int move in moves ) {
-                this.board.UpdateBoard(move);
+                this.board.UpdateBoard(move - BoardIndexCorrection);
             }
 
             Assert.Equal(availableMoves, this.board.GetAvailableSpaces().Count());

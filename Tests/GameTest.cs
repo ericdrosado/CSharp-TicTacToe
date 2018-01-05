@@ -5,8 +5,10 @@ using Xunit;
 
 namespace Tests.TicTacToe {
     
-    public class GameTest {
-        
+    public class GameTest
+    {
+
+        private const int BoardIndexCorrection = 1;
         private Board board;
 
         public GameTest() {
@@ -23,7 +25,7 @@ namespace Tests.TicTacToe {
             int spacesAvailableBefore = this.board.GetAvailableSpaces().Count();
 
             foreach (int move in moves) {
-                this.board.UpdateBoard(move);
+                this.board.UpdateBoard(move - BoardIndexCorrection);
             }
             int spacesAvailableAfter = this.board.GetAvailableSpaces().Count();
 
