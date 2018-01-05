@@ -5,6 +5,7 @@ namespace TicTacToe {
     
     public class BoardBuilder {
 
+        private const int BoardCellCorrection = 1;
         private const int MaximumSingleDigitNumber = 9;
         private const int CellCorrection = 2;
         private const int NumberOfBoardsDisplayed = 2;
@@ -13,7 +14,7 @@ namespace TicTacToe {
             string board = "";
             for (int index = 0; index <= boardSize * boardSize - boardSize; index += boardSize) {
                 string row = BuildRow(gameBoard, boardSize, index);
-                string displayRow = BuildDisplayRow(boardSize, index);
+                string displayRow = BuildDisplayRow(boardSize, index + BoardCellCorrection);
                 board = string.Concat(board, row, displayRow);
                 if (index < boardSize * boardSize - boardSize) {
                     string horizontalFrame = BuildHorizontalFrame(boardSize);
