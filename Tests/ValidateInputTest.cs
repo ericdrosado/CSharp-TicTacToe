@@ -37,6 +37,54 @@ namespace Tests.TicTacToe {
         }
         
         [Theory]
+        [InlineData("1")]
+        [InlineData("2")]
+        [InlineData("5")]
+        [InlineData("9")]
+        public void ReturnTrueIfInputIsWithinBoardBounds(string input) {
+            string[] board = new string[9];
+            bool hasCorrectBoardValue = this.validateInput.IsInputWithinBoardBounds(board, input);
+
+            Assert.True(hasCorrectBoardValue);
+        }
+        
+        [Theory]
+        [InlineData("0")]
+        [InlineData("10")]
+        [InlineData("12")]
+        [InlineData("50")]
+        public void ReturnFalseIfInputIsNotWithinBoardBounds(string input) {
+            string[] board = new string[9];
+            bool hasCorrectBoardValue = this.validateInput.IsInputWithinBoardBounds(board, input);
+
+            Assert.False(hasCorrectBoardValue);
+        }
+        
+        [Theory]
+        [InlineData("1")]
+        [InlineData("2")]
+        [InlineData("5")]
+        [InlineData("9")]
+        public void ReturnTrueIfInputIsAvailableOnTheBoard(string input) {
+            string[] board = {" "," ","X"," "," "," ","O"," "," "};
+            bool hasCorrectBoardInput = this.validateInput.IsInputAvailableOnTheBoard(board, input);
+
+            Assert.True(hasCorrectBoardInput);
+        }
+        
+        [Theory]
+        [InlineData("1")]
+        [InlineData("3")]
+        [InlineData("5")]
+        [InlineData("7")]
+        public void ReturnFalseIfInputIsNotAvailableOnTheBoard(string input) {
+            string[] board = {"X"," ","X"," ","O"," ","O"," "};
+            bool hasCorrectBoardInput = this.validateInput.IsInputAvailableOnTheBoard(board, input);
+
+            Assert.False(hasCorrectBoardInput);
+        }
+        
+        [Theory]
         [InlineData("3")]
         [InlineData("4")]
         public void ReturnTrueIfBoardSizeIsCorrect(string input) {
@@ -68,8 +116,8 @@ namespace Tests.TicTacToe {
         
         [Theory]
         [InlineData("")]
+        [InlineData(" ")]
         [InlineData("Te")]
-        [InlineData("Test")]
         [InlineData("!@")]
         public void ReturnFalseIfInputIsNotASingleCharacter(string input) {
             bool hasSingleCharacter = this.validateInput.IsInputASingleCharacter(input);

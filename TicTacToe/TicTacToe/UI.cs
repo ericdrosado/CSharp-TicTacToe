@@ -2,8 +2,7 @@
 
 namespace TicTacToe {
 
-    public class UI
-    {
+    public class UI {
 
         private const int BoardIndexCorrection = 1;
         private BoardBuilder boardBuilder;
@@ -18,7 +17,8 @@ namespace TicTacToe {
 
         public int GetMove(string[] board, int boardSize) {
             string input = this.io.GetInput();
-            while (!this.validateInput.IsInputNumericString(input)) {
+            while (!this.validateInput.IsInputNumericString(input) || !this.validateInput.IsInputWithinBoardBounds(board, input) || 
+                   !this.validateInput.IsInputAvailableOnTheBoard(board, input)) {
                 IncorrectInputView(board, boardSize);
                 input = this.io.GetInput();
             }
@@ -30,7 +30,7 @@ namespace TicTacToe {
             this.io.Print(ChooseHumanMarkerPrompt());
             string input = this.io.GetInput();
             while (!this.validateInput.IsInputASingleCharacter(input)) {
-                this.io.Print(InvalidEntryPrompt());
+                IncorrectMarkerChoiceView();
                 input = this.io.GetInput();
             }
             return input;
@@ -40,7 +40,7 @@ namespace TicTacToe {
             this.io.Print(ChooseAIMarkerPrompt());
             string input = this.io.GetInput();
             while (!this.validateInput.IsInputASingleCharacter(input) || this.validateInput.IsTheSameMarkerAsPlayer(input, playerMarker)) {
-                this.io.Print(InvalidEntryPrompt());
+                IncorrectAIMarkerChoiceView();
                 input = this.io.GetInput();
             }
             return input;
@@ -65,6 +65,16 @@ namespace TicTacToe {
         private void IncorrectBoardSizeView() {
             Console.Clear();
             this.io.Print(IncorrectBoardSizePrompt());
+        }
+        
+        private void IncorrectMarkerChoiceView() {
+            Console.Clear();
+            this.io.Print(IncorrectMarkerChoicePrompt());
+        }
+
+        private void IncorrectAIMarkerChoiceView() {
+            Console.Clear();
+            this.io.Print(IncorrectAIMarkerChoicePrompt());
         }
 
         public void PrintTurnPrompt(string marker) {
@@ -92,21 +102,21 @@ namespace TicTacToe {
 
         private string Greeting() {
             return
-            "+-------------------------------------------------------+\n" +
-            "|                  Welcome to TicTacToe                 |\n" +
-            "+-------------------------------------------------------+";
+                "+-------------------------------------------------------+\n" +
+                "|                  Welcome to TicTacToe                 |\n" +
+                "+-------------------------------------------------------+";
         }
 
         private string Instructions() {
             return
-            "+-------------------------------------------------------+\n" +
-            "|Instuctions: The object of TicTacToe is to get three   |\n" +
-            "|of your markers in a row before your opponent can. If  |\n" +
-            "|all the spaces are occupied with no winner, the game   |\n" +
-            "|ends in a draw. You can choose a space by typing the   |\n" +
-            "|number that corresponds to an open space and then press|\n" +
-            "|enter.                                                 |\n" +
-            "+-------------------------------------------------------+";
+                "+-------------------------------------------------------+\n" +
+                "|Instuctions: The object of TicTacToe is to get three   |\n" +
+                "|of your markers in a row before your opponent can. If  |\n" +
+                "|all the spaces are occupied with no winner, the game   |\n" +
+                "|ends in a draw. You can choose a space by typing the   |\n" +
+                "|number that corresponds to an open space and then press|\n" +
+                "|enter.                                                 |\n" +
+                "+-------------------------------------------------------+";
         }
         
         private string ChooseHumanMarkerPrompt() {
@@ -127,23 +137,23 @@ namespace TicTacToe {
 
         private string ChooseBoardSizePrompt() {
             return
-            "+-------------------------------------------------------+\n" +
-            "|Please choose the size of the board you would like to  |\n" +
-            "|play on. Enter '3' for 3X3 or '4' for 4X4 board.       |\n" +
-            "+-------------------------------------------------------+";
+                "+-------------------------------------------------------+\n" +
+                "|Please choose the size of the board you would like to  |\n" +
+                "|play on. Enter '3' for 3X3 or '4' for 4X4 board.       |\n" +
+                "+-------------------------------------------------------+";
         }
 
         private string BoardHeader(string headerText) {
             return
-            headerText + "\n" +
-            "+-------------------------------------------------------+\n";
+                headerText + "\n" +
+                "+-------------------------------------------------------+\n";
         }
 
         private string BoardBorder(string board) {
             return
-            "+-------------------------------------------------------+\n" +
-            board + "\n" +
-            "+-------------------------------------------------------+\n";
+                "+-------------------------------------------------------+\n" +
+                board + "\n" +
+                "+-------------------------------------------------------+\n";
         }
 
         private string TurnPrompt(string marker) {
@@ -152,17 +162,34 @@ namespace TicTacToe {
 
         private string InvalidEntryPrompt() {
             return 
-            "+-------------------------------------------------------+\n" +
-            "|The entry used is not a valid entry.                   |\n" +
-            "+-------------------------------------------------------+";
+                "+-------------------------------------------------------+\n" +
+                "|The entry used is not a valid entry. Make sure the move|\n" +
+                "|is available on the board.                             |\n" +
+                "+-------------------------------------------------------+";
         }
 
         private string IncorrectBoardSizePrompt() {
             return 
-            "+-------------------------------------------------------+\n" +
-            "|The entry used is not a valid entry. Be sure to input  |\n" +
-            "|an entry of '3' for 3X3 or '4' for 4X4.                |\n" +
-            "+-------------------------------------------------------+";
+                "+-------------------------------------------------------+\n" +
+                "|The entry used is not a valid entry. Be sure to input  |\n" +
+                "|an entry of '3' for 3X3 or '4' for 4X4.                |\n" +
+                "+-------------------------------------------------------+";
+        }
+        
+        private string IncorrectMarkerChoicePrompt() {
+            return 
+                "+-------------------------------------------------------+\n" +
+                "|The entry used is not a valid entry. Be sure to input  |\n" +
+                "|a single character.                                    |\n" +
+                "+-------------------------------------------------------+";
+        }
+        
+        private string IncorrectAIMarkerChoicePrompt() {
+            return 
+                "+-------------------------------------------------------+\n" +
+                "|The entry used is not a valid entry. Be sure to input  |\n" +
+                "|a single character that is different than your marker. |\n" +
+                "+-------------------------------------------------------+";
         }
 
         private string WinPrompt(string marker) {
