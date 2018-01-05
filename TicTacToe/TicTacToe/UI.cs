@@ -2,8 +2,10 @@
 
 namespace TicTacToe {
 
-    public class UI {
+    public class UI
+    {
 
+        private const int BoardIndexCorrection = 1;
         private BoardBuilder boardBuilder;
         private IO io;
         private ValidateInput validateInput;
@@ -20,7 +22,7 @@ namespace TicTacToe {
                 IncorrectInputView(board, boardSize);
                 input = this.io.GetInput();
             }
-            int move = Int32.Parse(input);
+            int move = Int32.Parse(input) - BoardIndexCorrection;
             return move;
         }
 
@@ -119,7 +121,7 @@ namespace TicTacToe {
             return
                 "+-------------------------------------------------------+\n" +
                 "|Please choose a single character as the computer's     |\n" +
-                "|marker and press enter.                                |\n" +
+                "|marker that is different than yours and press enter.   |\n" +
                 "+-------------------------------------------------------+";
         }
 

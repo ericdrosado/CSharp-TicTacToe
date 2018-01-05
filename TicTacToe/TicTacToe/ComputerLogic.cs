@@ -7,7 +7,7 @@ namespace TicTacToe {
 
     public class ComputerLogic
     {
-
+        private const int BoardIndexCorrection = 1;
         private const int MaximumScore = 1000;
         private const int MinimumScore = -1000;
         private const int TieScore = 0;
@@ -40,7 +40,7 @@ namespace TicTacToe {
                     bestMove = i;
                 }
             }
-
+            
             return moves[bestMove].Spot;
         }
 

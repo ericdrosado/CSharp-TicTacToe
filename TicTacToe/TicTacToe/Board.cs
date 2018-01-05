@@ -51,7 +51,7 @@ namespace TicTacToe {
         }
         
         public void UpdateBoard(int move) {
-            int index = move - BoardCorrection;
+            int index = move;
             gameBoard[index] = currentMarker;
             SwitchMarker();
         }
@@ -61,7 +61,7 @@ namespace TicTacToe {
         }
 
         public void SwitchMarker() {
-            currentMarker = currentMarker == playerMarker ? aiMarker : playerMarker;
+            currentMarker = currentMarker == PlayerMarker ? AiMarker : PlayerMarker;
         }
 
     }
